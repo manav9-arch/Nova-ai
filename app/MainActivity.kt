@@ -1,16 +1,14 @@
 package com.nova.ai
 
 import android.Manifest
+import android.app.Activity
+import android.os.Bundle
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
@@ -18,9 +16,8 @@ import java.net.URL
 import java.util.Locale
 import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+class MainActivity : Activity(), TextToSpeech.OnInitListener {
 
-    // Tumhara existing Cloudflare Nova backend
     private val apiUrl =
         "https://red-mountain-f307.motiharijan123456.workers.dev/chat"
 
@@ -38,58 +35,51 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         tts = TextToSpeech(this, this)
 
-        requestMicrophonePermission()
+        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                101
+            )
+        }
     }
 
     private fun createNovaUI() {
 
         val main = LinearLayout(this)
-
         main.orientation = LinearLayout.VERTICAL
         main.setPadding(24, 24, 24, 24)
 
         val title = TextView(this)
-
         title.text = "Nova AI"
         title.textSize = 28f
-        title.setPadding(0, 0, 0, 8)
 
         status = TextView(this)
-
         status.text = "● Nova Online"
-        status.textSize = 15f
-        status.setPadding(0, 0, 0, 16)
+        status.textSize = 16f
 
         chat = TextView(this)
-
-        chat.text =
-            "Nova: Hello! Main Nova hoon. 👋\n\n"
-
+        chat.text = "Nova: Hello! Main Nova hoon. 👋\n\n"
         chat.textSize = 17f
 
         val scroll = ScrollView(this)
-
         scroll.addView(chat)
 
         input = EditText(this)
-
         input.hint = "Nova se baat karo..."
-        input.singleLine = true
+
+        val send = Button(this)
+        send.text = "Send"
+
+        val voice = Button(this)
+        voice.text = "🎙️ Voice"
 
         val buttons = LinearLayout(this)
-
         buttons.orientation = LinearLayout.HORIZONTAL
 
-        val voiceButton = Button(this)
-
-        voiceButton.text = "🎙️ Voice"
-
-        val sendButton = Button(this)
-
-        sendButton.text = "Send"
-
         buttons.addView(
-            voiceButton,
+            voice,
             LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -98,7 +88,7 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         )
 
         buttons.addView(
-            sendButton,
+            send,
             LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -107,7 +97,6 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         )
 
         main.addView(title)
-
         main.addView(status)
 
         main.addView(
@@ -120,16 +109,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         )
 
         main.addView(input)
-
         main.addView(buttons)
 
         setContentView(main)
 
-        sendButton.setOnClickListener {
+        send.setOnClickListener {
             sendMessage()
         }
 
-        voiceButton.setOnClickListener {
+        voice.setOnClickListener {
             startVoice()
         }
     }
@@ -138,38 +126,27 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         val message = input.text.toString().trim()
 
-        if (message.isEmpty()) {
-            return
-        }
+        if (message.isEmpty()) return
 
         input.setText("")
 
-        addMessage("You", message)
-
+        chat.append("You: $message\n\n")
         status.text = "● Nova Thinking..."
 
         thread {
 
             try {
 
-                val requestBody = JSONObject()
+                val body = JSONObject()
 
-                requestBody.put(
-                    "message",
-                    message
-                )
-
-                requestBody.put(
-                    "history",
-                    history
-                )
+                body.put("message", message)
+                body.put("history", history)
 
                 val connection =
                     URL(apiUrl).openConnection()
-                            as HttpURLConnection
+                        as HttpURLConnection
 
                 connection.requestMethod = "POST"
-
                 connection.doOutput = true
 
                 connection.setRequestProperty(
@@ -178,16 +155,10 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 )
 
                 connection.connectTimeout = 15000
-
                 connection.readTimeout = 30000
 
-                connection.outputStream.use { output ->
-
-                    output.write(
-                        requestBody
-                            .toString()
-                            .toByteArray()
-                    )
+                connection.outputStream.use {
+                    it.write(body.toString().toByteArray())
                 }
 
                 val response =
@@ -195,20 +166,19 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                         .bufferedReader()
                         .use { it.readText() }
 
-                val json =
-                    JSONObject(response)
+                connection.disconnect()
 
-                val reply =
-                    json.optString(
-                        "reply",
-                        "Mujhe reply nahi mila."
-                    )
+                val json = JSONObject(response)
+
+                val reply = json.optString(
+                    "reply",
+                    "Mujhe reply nahi mila."
+                )
 
                 runOnUiThread {
 
-                    addMessage(
-                        "Nova",
-                        reply
+                    chat.append(
+                        "Nova: $reply\n\n"
                     )
 
                     status.text =
@@ -217,32 +187,19 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     speak(reply)
                 }
 
-                connection.disconnect()
-
-            } catch (error: Exception) {
+            } catch (e: Exception) {
 
                 runOnUiThread {
 
                     status.text =
                         "● Connection Error"
 
-                    addMessage(
-                        "Nova",
-                        "Connection problem. Dobara try karo."
+                    chat.append(
+                        "Nova: Connection problem.\n\n"
                     )
                 }
             }
         }
-    }
-
-    private fun addMessage(
-        sender: String,
-        message: String
-    ) {
-
-        chat.append(
-            "$sender: $message\n\n"
-        )
     }
 
     private fun startVoice() {
@@ -258,30 +215,27 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             return
         }
 
-        val voiceIntent =
+        val intent =
             Intent(
                 RecognizerIntent.ACTION_RECOGNIZE_SPEECH
             )
 
-        voiceIntent.putExtra(
+        intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
 
-        voiceIntent.putExtra(
+        intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE,
             "hi-IN"
         )
 
-        voiceIntent.putExtra(
+        intent.putExtra(
             RecognizerIntent.EXTRA_PROMPT,
             "Nova ko bolo..."
         )
 
-        startActivityForResult(
-            voiceIntent,
-            VOICE_REQUEST
-        )
+        startActivityForResult(intent, 100)
     }
 
     override fun onActivityResult(
@@ -296,25 +250,30 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             data
         )
 
-        if (
-            requestCode == VOICE_REQUEST &&
-            resultCode == RESULT_OK
-        ) {
+        if (requestCode == 100 &&
+            resultCode == RESULT_OK) {
 
             val results =
                 data?.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS
                 )
 
-            val spokenText =
-                results?.firstOrNull()
+            val text = results?.firstOrNull()
 
-            if (!spokenText.isNullOrBlank()) {
+            if (!text.isNullOrBlank()) {
 
-                input.setText(spokenText)
+                input.setText(text)
 
                 sendMessage()
             }
+        }
+    }
+
+    override fun onInit(result: Int) {
+
+        if (result == TextToSpeech.SUCCESS) {
+
+            tts.language = Locale("hi", "IN")
         }
     }
 
@@ -328,50 +287,11 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         )
     }
 
-    private fun requestMicrophonePermission() {
-
-        if (
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.RECORD_AUDIO
-                ),
-                MICROPHONE_PERMISSION
-            )
-        }
-    }
-
-    override fun onInit(result: Int) {
-
-        if (
-            result ==
-            TextToSpeech.SUCCESS
-        ) {
-
-            tts.language =
-                Locale("hi", "IN")
-        }
-    }
-
     override fun onDestroy() {
 
         tts.stop()
-
         tts.shutdown()
 
         super.onDestroy()
-    }
-
-    companion object {
-
-        private const val VOICE_REQUEST = 100
-
-        private const val MICROPHONE_PERMISSION = 101
     }
 }
