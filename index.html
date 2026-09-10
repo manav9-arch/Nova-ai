@@ -399,3 +399,448 @@ body {
 </div>
 
 <!-- NOVA AI INTERFACE : END -->
+<script>
+/* ===== NOVA AI BUTTON SYSTEM ===== */
+
+const novaScreen = document.getElementById("nova-screen");
+const novaText = document.getElementById("nova-text");
+const novaSend = document.getElementById("nova-send");
+const novaMic = document.getElementById("nova-mic");
+const novaAttach = document.getElementById("nova-attach");
+
+const NOVA_CHAT_API =
+"https://red-mountain-f307.motiharijan123456.workers.dev/chat";
+
+let novaHistory = [];
+
+function novaAddMessage(text, type) {
+  const welcome = document.getElementById("nova-welcome");
+
+  if (welcome) {
+    welcome.remove();
+  }
+
+  const box = document.createElement("div");
+  box.className = "nova-msg " + type;
+  box.textContent = text;
+
+  novaScreen.appendChild(box);
+  novaScreen.scrollTop = novaScreen.scrollHeight;
+
+  return box;
+}
+
+async function novaSendMessage() {
+
+  const message = novaText.value.trim();
+
+  if (!message) return;
+
+  novaAddMessage(message, "nova-user");
+
+  novaText.value = "";
+  novaText.style.height = "42px";
+
+  const thinking = novaAddMessage(
+    "Nova is thinking...",
+    "nova-ai"
+  );
+
+  novaSend.disabled = true;
+
+  try {
+
+    const response = await fetch(NOVA_CHAT_API, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        message: message,
+        history: novaHistory
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(
+        data.error || "Nova response failed"
+      );
+    }
+
+    thinking.textContent = data.reply;
+
+    novaHistory.push({
+      role: "user",
+      content: message
+    });
+
+    novaHistory.push({
+      role: "assistant",
+      content: data.reply
+    });
+
+    localStorage.setItem(
+      "novaHistory",
+      JSON.stringify(novaHistory)
+    );
+
+    novaSpeak(data.reply);
+
+  } catch (error) {
+
+    thinking.textContent =
+      "Sorry, Nova could not respond right now.";
+
+    console.error(
+      "Nova Error:",
+      error
+    );
+
+  } finally {
+
+    novaSend.disabled = false;
+    novaText.focus();
+
+  }
+}
+
+/* SEND BUTTON */
+
+if (novaSend) {
+  novaSend.addEventListener(
+    "click",
+    novaSendMessage
+  );
+}
+
+/* ENTER TO SEND */
+
+if (novaText) {
+
+  novaText.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+        novaSendMessage();
+
+      }
+
+    }
+  );
+
+  novaText.addEventListener(
+    "input",
+    function() {
+
+      this.style.height = "auto";
+
+      this.style.height =
+        Math.min(
+          this.scrollHeight,
+          120
+        ) + "px";
+
+    }
+  );
+}
+
+/* VOICE INPUT */
+
+let novaRecognition = null;
+
+if (
+  "webkitSpeechRecognition" in window ||
+  "SpeechRecognition" in window
+) {
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  novaRecognition =
+    new SpeechRecognition();
+
+  novaRecognition.lang = "en-IN";
+
+  novaRecognition.continuous = false;
+
+  novaRecognition.interimResults = false;
+
+  novaRecognition.onstart =
+    function() {
+
+      novaMic.textContent = "🔴";
+
+    };
+
+  novaRecognition.onresult =
+    function(event) {
+
+      const result =
+        event.results[0][0].transcript;
+
+      novaText.value = result;
+
+      novaText.dispatchEvent(
+        new Event("input")
+      );
+
+    };
+
+  novaRecognition.onend =
+    function() {
+
+      novaMic.textContent = "🎙";
+
+    };
+
+  novaRecognition.onerror =
+    function() {
+
+      novaMic.textContent = "🎙";
+
+    };
+
+}
+
+/* MIC BUTTON */
+
+if (novaMic) {
+
+  novaMic.addEventListener(
+    "click",
+    function() {
+
+      if (!novaRecognition) {
+
+        alert(
+          "Voice input is not supported in this browser."
+        );
+
+        return;
+
+      }
+
+      novaRecognition.start();
+
+    }
+  );
+
+}
+
+/* NOVA VOICE OUTPUT */
+
+function novaSpeak(text) {
+
+  if (
+    !("speechSynthesis" in window)
+  ) {
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const speech =
+    new SpeechSynthesisUtterance(text);
+
+  speech.lang = "en-IN";
+
+  speech.rate = 1;
+
+  speech.pitch = 1;
+
+  window.speechSynthesis.speak(
+    speech
+  );
+
+}
+
+/* ATTACH BUTTON */
+
+if (novaAttach) {
+
+  novaAttach.addEventListener(
+    "click",
+    function() {
+
+      const choice =
+        document.createElement("input");
+
+      choice.type = "file";
+
+      choice.onchange =
+        function() {
+
+          if (!this.files.length) return;
+
+          const file =
+            this.files[0];
+
+          novaAddMessage(
+            "📎 " + file.name,
+            "nova-user"
+          );
+
+        };
+
+      choice.click();
+
+    }
+  );
+
+}
+
+/* TOOL BUTTONS */
+
+const novaTools =
+  document.querySelectorAll(
+    ".nova-tool"
+  );
+
+novaTools.forEach(
+  function(button) {
+
+    const text =
+      button.textContent.trim();
+
+    if (text.includes("File")) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          novaAttach.click();
+
+        }
+      );
+
+    }
+
+    if (text.includes("Image")) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          const image =
+            document.createElement("input");
+
+          image.type = "file";
+
+          image.accept =
+            "image/*";
+
+          image.onchange =
+            function() {
+
+              if (!this.files.length)
+                return;
+
+              novaAddMessage(
+                "🖼️ " +
+                this.files[0].name,
+                "nova-user"
+              );
+
+            };
+
+          image.click();
+
+        }
+      );
+
+    }
+
+    if (text.includes("Voice")) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          if (novaRecognition) {
+            novaRecognition.start();
+          } else {
+            alert(
+              "Voice input is not supported."
+            );
+          }
+
+        }
+      );
+
+    }
+
+    if (text.includes("New Chat")) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          novaHistory = [];
+
+          localStorage.removeItem(
+            "novaHistory"
+          );
+
+          novaScreen.innerHTML = "";
+
+          const welcome =
+            document.createElement("div");
+
+          welcome.id =
+            "nova-welcome";
+
+          welcome.innerHTML =
+            "<div style='font-size:55px'>✦</div>" +
+            "<h1>Hello, I'm Nova</h1>" +
+            "<p>Your intelligent personal AI assistant.</p>";
+
+          novaScreen.appendChild(
+            welcome
+          );
+
+        }
+      );
+
+    }
+
+  }
+);
+
+/* LOAD MEMORY */
+
+try {
+
+  const saved =
+    localStorage.getItem(
+      "novaHistory"
+    );
+
+  if (saved) {
+
+    novaHistory =
+      JSON.parse(saved);
+
+  }
+
+} catch (error) {
+
+  novaHistory = [];
+
+}
+
+console.log(
+  "✦ Nova AI button system ready"
+);
+
+            </script>
