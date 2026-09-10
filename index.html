@@ -36,4 +36,159 @@ async function testNovaConnection() {
 }
 
 testNovaConnection();
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #080b18;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+#nova-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#nova-topbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: #10152b;
+  border-bottom: 1px solid #252b48;
+}
+
+#nova-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#nova-status {
+  font-size: 12px;
+  color: #7cffb2;
+}
+
+#nova-chat {
+  flex: 1;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.nova-message {
+  max-width: 85%;
+  margin: 10px 0;
+  padding: 12px 15px;
+  border-radius: 14px;
+  line-height: 1.5;
+}
+
+.nova-user {
+  margin-left: auto;
+  background: #3949ab;
+}
+
+.nova-ai {
+  margin-right: auto;
+  background: #171d35;
+}
+
+#nova-composer {
+  padding: 12px;
+  background: #10152b;
+  border-top: 1px solid #252b48;
+}
+
+#nova-input {
+  width: 100%;
+  min-height: 50px;
+  resize: none;
+  padding: 14px;
+  border: 1px solid #303758;
+  border-radius: 14px;
+  background: #080b18;
+  color: white;
+  outline: none;
+  font-size: 15px;
+}
+
+#nova-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 9px;
+  overflow-x: auto;
+}
+
+.nova-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 13px;
+  background: #202746;
+  color: white;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+#nova-send {
+  background: #3949ab;
+}
+</style>
+
+<div id="nova-app">
+
+  <header id="nova-topbar">
+    <div id="nova-title">✦ Nova AI</div>
+    <div id="nova-status">● Connected</div>
+  </header>
+
+  <main id="nova-chat"></main>
+
+  <section id="nova-composer">
+
+    <textarea
+      id="nova-input"
+      placeholder="Message Nova..."
+      rows="1"
+    ></textarea>
+
+    <div id="nova-actions">
+
+      <button class="nova-btn" id="nova-file">
+        📎 File
+      </button>
+
+      <button class="nova-btn" id="nova-image">
+        🖼️ Image
+      </button>
+
+      <button class="nova-btn" id="nova-voice">
+        🎙️ Voice
+      </button>
+
+      <button class="nova-btn" id="nova-new">
+        ＋ New
+      </button>
+
+      <button class="nova-btn" id="nova-send">
+        ➤ Send
+      </button>
+
+    </div>
+
+    <input id="nova-file-input" type="file" hidden>
+    <input
+      id="nova-image-input"
+      type="file"
+      accept="image/*"
+      hidden
+    >
+
+  </section>
+
+</div>
 </script>
