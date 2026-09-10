@@ -1,367 +1,200 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b0d10">
 <title>Nova AI</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;background:#070a12;color:#fff;font-family:Arial,sans-serif}
+body{overflow:hidden}
+button,textarea,input,select{font:inherit}
+button{cursor:pointer}
+
+#app{height:100dvh;display:flex;background:#070a12}
+
+#side{
+width:220px;min-width:220px;background:#0d1322;
+border-right:1px solid #1c2435;padding:12px;
+display:flex;flex-direction:column;gap:8px
 }
 
-:root{
-  --bg:#080b14;
-  --panel:#101522;
-  --panel2:#171d2d;
-  --text:#f5f7ff;
-  --muted:#9ca6bd;
-  --border:#283148;
-  --accent:#6c7cff;
-  --user:#27345f;
-  --nova:#151b2a;
-  --danger:#ff5964;
-}
-
-body.light{
-  --bg:#f4f6fb;
-  --panel:#ffffff;
-  --panel2:#eef1f7;
-  --text:#101522;
-  --muted:#657087;
-  --border:#d9deea;
-  --accent:#5865f2;
-  --user:#dce3ff;
-  --nova:#ffffff;
-}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-  height:100vh;
-  overflow:hidden;
-}
-
-button,input,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-#app{
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-}
-
-/* HEADER */
-header{
-  height:62px;
-  background:var(--panel);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-  flex-shrink:0;
+.brand{
+display:flex;align-items:center;gap:9px;padding:3px 4px 8px;
+font-weight:800;font-size:17px
 }
 
 .logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:20px;
-  font-weight:bold;
+width:32px;height:32px;border-radius:10px;
+background:linear-gradient(135deg,#4e8cff,#8d35ff);
+display:grid;place-items:center
 }
 
-.logoIcon{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#6c7cff,#9b6cff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
+.sidebtn{
+border:1px solid #202a40;background:#111a2c;color:#dce3ef;
+border-radius:9px;padding:9px;text-align:left
 }
 
-.headerBtns{
-  display:flex;
-  gap:7px;
+.sidebtn.primary{
+background:linear-gradient(135deg,#4b2cff,#7447ff);
+border:0;color:#fff;text-align:center;font-weight:700
 }
 
-.iconBtn{
-  width:40px;
-  height:40px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:var(--text);
-  border-radius:11px;
+.section{
+font-size:10px;color:#69758a;margin:8px 4px 2px;
+text-transform:uppercase
 }
 
-/* CHAT */
+#main{
+flex:1;min-width:0;display:flex;flex-direction:column
+}
+
+#top{
+height:56px;display:flex;align-items:center;justify-content:space-between;
+padding:0 12px;border-bottom:1px solid #1b2333;background:#0b1020
+}
+
+.topbtn{
+width:36px;height:36px;border:0;border-radius:9px;
+background:#121a2b;color:#fff
+}
+
+.status{font-size:11px;color:#7b8799}
+.status b{color:#31d27a}
+
 #chat{
-  flex:1;
-  overflow-y:auto;
-  padding:18px 12px 120px;
+flex:1;overflow:auto;padding:22px 14px 16px
 }
 
 .welcome{
-  max-width:700px;
-  margin:50px auto;
-  text-align:center;
+text-align:center;max-width:650px;margin:70px auto 0
 }
 
-.welcome h1{
-  font-size:34px;
-  margin-bottom:10px;
+.biglogo{
+width:76px;height:76px;border-radius:22px;margin:auto;
+background:linear-gradient(135deg,#9a65ff,#1c8cff);
+display:grid;place-items:center;font-size:34px;font-weight:900
 }
 
-.welcome p{
-  color:var(--muted);
-  line-height:1.6;
+.welcome h1{font-size:30px;margin:18px 0 8px}
+.welcome p{color:#8792a4;font-size:13px;line-height:1.5}
+
+.quick{
+display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:15px
 }
 
-.message{
-  max-width:850px;
-  margin:0 auto 14px;
-  display:flex;
-  gap:9px;
+.quick button{
+border:1px solid #202a3d;background:#10182a;color:#d9e0eb;
+border-radius:18px;padding:7px 10px
 }
 
-.avatar{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-  background:var(--panel2);
-  border:1px solid var(--border);
-}
+.row{display:flex;margin:13px 0}
+.row.user{justify-content:flex-end}
+.wrap{max-width:min(82%,680px)}
 
 .bubble{
-  max-width:calc(100% - 45px);
-  padding:12px 14px;
-  border-radius:15px;
-  line-height:1.55;
-  white-space:pre-wrap;
-  word-break:break-word;
+padding:12px 14px;border-radius:16px;line-height:1.5;
+font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere
 }
 
 .user .bubble{
-  background:var(--user);
+background:#2867e8;border-bottom-right-radius:5px
 }
 
-.nova .bubble{
-  background:var(--nova);
-  border:1px solid var(--border);
+.ai .bubble{
+background:#171a20;border:1px solid #20242d;
+border-bottom-left-radius:5px
 }
 
-/* ATTACHMENT */
-.attachment{
-  max-width:850px;
-  margin:0 auto 14px;
-  padding:10px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:12px;
-  display:none;
+.tools{display:flex;gap:5px;margin-top:4px}
+.tool{
+border:0;background:transparent;color:#7d8796;
+padding:4px 7px;font-size:11px
 }
 
-.attachment img{
-  max-width:180px;
-  max-height:180px;
-  border-radius:9px;
-  display:block;
-  margin-top:7px;
+.typing{
+display:none;width:max-content;padding:10px 13px;
+background:#171a20;border-radius:15px
 }
 
-.attachmentName{
-  color:var(--muted);
-  font-size:13px;
+.typing.show{display:flex;gap:4px}
+
+.dot{
+width:6px;height:6px;border-radius:50%;background:#a5afbd
 }
 
-/* COMPOSER */
-.composerArea{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:linear-gradient(transparent,var(--bg) 25%);
-  padding:18px 12px 12px;
+#composer{
+padding:9px 12px 11px;border-top:1px solid #1b2333;
+background:#0b1020
 }
 
-.composer{
-  max-width:850px;
-  margin:auto;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:8px;
-  box-shadow:0 8px 30px rgba(0,0,0,.18);
+.box{
+border:1px solid #202a3b;background:#111827;
+border-radius:17px;padding:7px;display:flex;
+align-items:flex-end;gap:6px
 }
 
 #input{
-  width:100%;
-  min-height:46px;
-  max-height:130px;
-  resize:none;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:var(--text);
-  padding:9px 10px;
+flex:1;min-width:0;max-height:120px;resize:none;
+border:0;outline:0;background:transparent;color:#fff;
+padding:8px;line-height:1.4
 }
 
-.toolbar{
-  display:flex;
-  align-items:center;
-  gap:7px;
+.smallbtn{
+width:40px;height:40px;border:0;border-radius:12px;
+background:#182235;color:#dbe4f1
 }
 
-.toolBtn{
-  height:38px;
-  min-width:38px;
-  padding:0 10px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:var(--text);
-  border-radius:10px;
+.send{background:#7544ff;color:#fff}
+
+.attachbar{
+display:flex;gap:8px;padding:5px 2px 0;flex-wrap:wrap
 }
 
-.sendBtn{
-  margin-left:auto;
-  background:var(--accent);
-  color:white;
-  border:0;
-  width:42px;
-  height:38px;
-  border-radius:10px;
-  font-size:18px;
+.attachbar button{
+border:0;background:transparent;color:#8792a3;font-size:11px
 }
 
-/* PANEL */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  display:none;
-  z-index:20;
+#drawer{
+position:fixed;inset:0;background:#0009;display:none;z-index:20
 }
 
-.sidePanel{
-  position:absolute;
-  right:0;
-  top:0;
-  bottom:0;
-  width:min(350px,90vw);
-  background:var(--panel);
-  padding:18px;
-  overflow-y:auto;
+#drawer.open{display:block}
+
+.panel{
+position:absolute;right:0;top:0;height:100%;
+width:min(350px,90%);background:#101621;
+border-left:1px solid #273146;padding:17px;overflow:auto
 }
 
-.panelHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
+.panel h2{margin-top:0}
+
+.panel label{
+display:block;color:#9aa6b7;font-size:12px;margin:15px 0 6px
 }
 
-.panelHeader h2{
-  font-size:20px;
+.panel select{
+width:100%;padding:10px;background:#182133;color:#fff;
+border:1px solid #2b3850;border-radius:9px
 }
 
-.closeBtn{
-  width:38px;
-  height:38px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:var(--text);
-  border-radius:10px;
+.pbtn{
+width:100%;padding:11px;margin-top:8px;border:0;
+border-radius:9px;background:#1a2436;color:#fff;
+text-align:left
 }
 
-.setting{
-  padding:14px 0;
-  border-bottom:1px solid var(--border);
+.hint{
+font-size:11px;color:#778397;line-height:1.5
 }
 
-.setting label{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.setting small{
-  display:block;
-  color:var(--muted);
-  margin-top:5px;
-}
-
-.action{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:var(--text);
-  border-radius:10px;
-  text-align:left;
-}
-
-.danger{
-  color:var(--danger);
-}
-
-/* LOADING */
-.typing{
-  display:flex;
-  gap:4px;
-}
-
-.typing span{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--muted);
-  animation:bounce 1s infinite;
-}
-
-.typing span:nth-child(2){
-  animation-delay:.15s;
-}
-
-.typing span:nth-child(3){
-  animation-delay:.3s;
-}
-
-@keyframes bounce{
-  50%{transform:translateY(-5px);opacity:.5}
-}
-
-@media(max-width:600px){
-  .welcome{
-    margin:35px auto;
-  }
-
-  .welcome h1{
-    font-size:28px;
-  }
-
-  .bubble{
-    max-width:calc(100% - 40px);
-  }
-
-  .toolBtn{
-    padding:0 8px;
-  }
+@media(max-width:700px){
+#side{display:none}
+.wrap{max-width:88%}
+.welcome{margin-top:55px}
+.welcome h1{font-size:26px}
 }
 </style>
 </head>
@@ -370,953 +203,935 @@ header{
 
 <div id="app">
 
-<header>
-  <div class="logo">
-    <div class="logoIcon">✦</div>
-    <span>Nova AI</span>
-  </div>
+<aside id="side">
 
-  <div class="headerBtns">
-    <button class="iconBtn" id="newChatBtn" title="New Chat">＋</button>
-    <button class="iconBtn" id="historyBtn" title="History">🕘</button>
-    <button class="iconBtn" id="settingsBtn" title="Settings">⚙️</button>
-  </div>
-</header>
-
-<main id="chat">
-
-  <div class="welcome" id="welcome">
-    <h1>How can I help?</h1>
-    <p>
-      I'm Nova AI. Ask me anything and I'll try my best to help.
-    </p>
-  </div>
-
-</main>
-
-<div id="attachment" class="attachment">
-  <div id="attachmentName" class="attachmentName"></div>
-  <img id="previewImage" alt="Preview">
+<div class="brand">
+<div class="logo">N</div>
+<span>Nova AI</span>
 </div>
 
-<div class="composerArea">
-  <div class="composer">
+<button class="sidebtn primary" id="newBtn">＋ New Chat</button>
+<button class="sidebtn" id="chatBtn">💬 Chat</button>
+<button class="sidebtn" id="toolsBtn">🧰 Tools & APIs</button>
+<button class="sidebtn" id="settingsBtn">⚙️ Settings</button>
+<button class="sidebtn" id="memoryBtn">🧠 Memory</button>
 
-    <textarea
-      id="input"
-      placeholder="Message Nova AI..."
-      rows="1"
-    ></textarea>
+<div class="section">Recent chats</div>
+<div id="recent"></div>
 
-    <div class="toolbar">
+</aside>
 
-      <button class="toolBtn" id="fileBtn" title="Attach file">
-        📎
-      </button>
+<main id="main">
 
-      <button class="toolBtn" id="imageBtn" title="Add image">
-        🖼️
-      </button>
+<header id="top">
 
-      <button class="toolBtn" id="voiceBtn" title="Voice input">
-        🎤
-      </button>
+<button class="topbtn" id="menuBtn">☰</button>
 
-      <button class="toolBtn" id="searchBtn" title="Search web">
-        🔎
-      </button>
+<div class="status">
+<b>●</b> <span id="status">Nova Ready</span>
+</div>
 
-      <button class="toolBtn" id="speakBtn" title="Speak last answer">
-        🔊
-      </button>
+<button class="topbtn" id="gearBtn">⚙</button>
 
-      <button class="sendBtn" id="sendBtn" title="Send">
-        ➤
-      </button>
+</header>
 
-    </div>
-  </div>
+<section id="chat">
+
+<div class="welcome" id="welcome">
+
+<div class="biglogo">N</div>
+
+<h1>Hello, I'm Nova.</h1>
+
+<p>
+Your advanced personal AI assistant.
+Chat, voice, memory, files and tools.
+</p>
+
+<div class="quick">
+
+<button data-q="What can you do?">
+✨ What can you do?
+</button>
+
+<button data-q="Plan my day">
+📅 Plan my day
+</button>
+
+<button data-q="Explain artificial intelligence simply">
+💡 Explain
+</button>
+
+</div>
+
+</div>
+
+<div class="typing" id="typing">
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+</div>
+
+</section>
+
+<footer id="composer">
+
+<div class="box">
+
+<textarea
+id="input"
+rows="1"
+placeholder="Message Nova..."
+autocomplete="off"></textarea>
+
+<button class="smallbtn" id="mic">🎤</button>
+
+<button class="smallbtn send" id="send">➤</button>
+
+</div>
+
+<div class="attachbar">
+
+<button id="fileBtn">📎 File</button>
+<button id="imageBtn">🖼️ Image</button>
+<button id="voiceBtn">🎙 Voice</button>
+<button id="speakBtn">🔊 Speak</button>
+
+</div>
+
+</footer>
+
+</main>
+</div>
+
+<div id="drawer">
+
+<div class="panel">
+
+<h2 id="panelTitle">Nova</h2>
+
+<div id="panelBody"></div>
+
+<button class="pbtn" id="closePanel">
+Close
+</button>
+
+</div>
+
 </div>
 
 <input type="file" id="fileInput" hidden>
 <input type="file" id="imageInput" accept="image/*" hidden>
 
-</div>
-
-<!-- SETTINGS -->
-<div class="overlay" id="settingsOverlay">
-
-  <div class="sidePanel">
-
-    <div class="panelHeader">
-      <h2>Nova Settings</h2>
-      <button class="closeBtn" id="closeSettings">×</button>
-    </div>
-
-    <div class="setting">
-      <label>
-        <span>Dark Mode</span>
-        <input type="checkbox" id="darkMode" checked>
-      </label>
-      <small>Change Nova's appearance.</small>
-    </div>
-
-    <div class="setting">
-      <label>
-        <span>Auto Speak</span>
-        <input type="checkbox" id="autoSpeak">
-      </label>
-      <small>Automatically speak Nova's replies.</small>
-    </div>
-
-    <button class="action" id="exportBtn">
-      📤 Export Conversation
-    </button>
-
-    <button class="action" id="memoryBtn">
-      🧠 View Memory
-    </button>
-
-    <button class="action" id="testBtn">
-      🔌 Test Nova Connection
-    </button>
-
-    <button class="action danger" id="clearBtn">
-      🗑️ Clear All Data
-    </button>
-
-  </div>
-
-</div>
-
-<!-- HISTORY -->
-<div class="overlay" id="historyOverlay">
-
-  <div class="sidePanel">
-
-    <div class="panelHeader">
-      <h2>Chat History</h2>
-      <button class="closeBtn" id="closeHistory">×</button>
-    </div>
-
-    <div id="historyList"></div>
-
-  </div>
-
-</div>
-
 <script>
 
-/* =========================
-   NOVA BACKEND
-========================= */
-
-const NOVA_BACKEND =
+const API =
 "https://red-mountain-f307.motiharijan123456.workers.dev/chat";
 
+const MSGKEY="nova_messages_v4";
+const SETKEY="nova_settings_v4";
 
-/* =========================
-   STATE
-========================= */
-
-let messages = [];
-let lastNovaReply = "";
-let selectedFile = null;
-
-let settings = JSON.parse(
-  localStorage.getItem("novaSettings") || "{}"
+let messages=load(MSGKEY,[]);
+let settings=Object.assign(
+{lang:"en-IN",autoSpeak:false},
+load(SETKEY,{})
 );
 
-let savedChats = JSON.parse(
-  localStorage.getItem("novaChats") || "[]"
+let busy=false;
+let recognition=null;
+let listening=false;
+let lastAI="";
+
+const $=id=>document.getElementById(id);
+
+const chat=$("chat");
+const input=$("input");
+const typing=$("typing");
+const status=$("status");
+
+function load(k,d){
+try{
+return JSON.parse(
+localStorage.getItem(k)||JSON.stringify(d)
+);
+}catch{
+return d;
+}
+}
+
+function save(){
+localStorage.setItem(MSGKEY,JSON.stringify(messages));
+}
+
+function saveSet(){
+localStorage.setItem(SETKEY,JSON.stringify(settings));
+}
+
+function esc(s){
+const d=document.createElement("div");
+d.textContent=String(s);
+return d.innerHTML;
+}
+
+function scroll(){
+chat.scrollTop=chat.scrollHeight;
+}
+
+function bubble(role,text,store=true){
+
+$("welcome").style.display="none";
+
+const row=document.createElement("div");
+row.className="row "+role;
+
+const wrap=document.createElement("div");
+wrap.className="wrap";
+
+const b=document.createElement("div");
+b.className="bubble";
+b.innerHTML=esc(text);
+
+wrap.appendChild(b);
+
+if(role==="ai"){
+
+lastAI=text;
+
+const tools=document.createElement("div");
+tools.className="tools";
+
+const copy=document.createElement("button");
+copy.className="tool";
+copy.textContent="Copy";
+
+copy.onclick=async()=>{
+
+try{
+
+await navigator.clipboard.writeText(text);
+
+copy.textContent="Copied";
+
+setTimeout(
+()=>copy.textContent="Copy",
+1000
 );
 
-let memory = JSON.parse(
-  localStorage.getItem("novaMemory") || "[]"
-);
+}catch{
 
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const chat = document.getElementById("chat");
-const input = document.getElementById("input");
-const sendBtn = document.getElementById("sendBtn");
-
-const fileInput = document.getElementById("fileInput");
-const imageInput = document.getElementById("imageInput");
-
-const attachment = document.getElementById("attachment");
-const attachmentName = document.getElementById("attachmentName");
-const previewImage = document.getElementById("previewImage");
-
-const settingsOverlay =
-document.getElementById("settingsOverlay");
-
-const historyOverlay =
-document.getElementById("historyOverlay");
-
-
-/* =========================
-   SETTINGS LOAD
-========================= */
-
-const darkMode =
-document.getElementById("darkMode");
-
-const autoSpeak =
-document.getElementById("autoSpeak");
-
-if(settings.darkMode === false){
-  darkMode.checked = false;
-  document.body.classList.add("light");
-}
-
-if(settings.autoSpeak === true){
-  autoSpeak.checked = true;
-}
-
-
-/* =========================
-   SAVE SETTINGS
-========================= */
-
-function saveSettings(){
-
-  settings.darkMode = darkMode.checked;
-  settings.autoSpeak = autoSpeak.checked;
-
-  localStorage.setItem(
-    "novaSettings",
-    JSON.stringify(settings)
-  );
-}
-
-
-/* =========================
-   ADD MESSAGE
-========================= */
-
-function addMessage(role,text){
-
-  const welcome =
-  document.getElementById("welcome");
-
-  if(welcome){
-    welcome.remove();
-  }
-
-  const row =
-  document.createElement("div");
-
-  row.className =
-  "message " +
-  (role === "user" ? "user" : "nova");
-
-  const avatar =
-  document.createElement("div");
-
-  avatar.className = "avatar";
-
-  avatar.textContent =
-  role === "user" ? "👤" : "✦";
-
-  const bubble =
-  document.createElement("div");
-
-  bubble.className = "bubble";
-
-  bubble.textContent = text;
-
-  row.appendChild(avatar);
-  row.appendChild(bubble);
-
-  chat.appendChild(row);
-
-  chat.scrollTop =
-  chat.scrollHeight;
-}
-
-
-/* =========================
-   TYPING
-========================= */
-
-function showTyping(){
-
-  const row =
-  document.createElement("div");
-
-  row.className =
-  "message nova";
-
-  row.id = "typingMessage";
-
-  const avatar =
-  document.createElement("div");
-
-  avatar.className = "avatar";
-  avatar.textContent = "✦";
-
-  const bubble =
-  document.createElement("div");
-
-  bubble.className = "bubble";
-
-  bubble.innerHTML = `
-    <div class="typing">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  `;
-
-  row.appendChild(avatar);
-  row.appendChild(bubble);
-
-  chat.appendChild(row);
-
-  chat.scrollTop =
-  chat.scrollHeight;
-}
-
-
-function hideTyping(){
-
-  const el =
-  document.getElementById("typingMessage");
-
-  if(el){
-    el.remove();
-  }
-}
-
-
-/* =========================
-   SEND MESSAGE
-========================= */
-
-async function sendMessage(){
-
-  const text =
-  input.value.trim();
-
-  if(!text && !selectedFile){
-    return;
-  }
-
-  let finalText = text;
-
-  if(selectedFile){
-
-    finalText +=
-    (finalText ? "\n\n" : "") +
-    "[Attached file: " +
-    selectedFile.name +
-    "]";
-
-  }
-
-  addMessage("user",finalText);
-
-  messages.push({
-    role:"user",
-    content:finalText
-  });
-
-  input.value = "";
-  input.style.height = "auto";
-
-  const currentHistory =
-  messages.slice(-20);
-
-  selectedFile = null;
-
-  attachment.style.display = "none";
-
-  showTyping();
-
-  try{
-
-    const response =
-    await fetch(NOVA_BACKEND,{
-      method:"POST",
-
-      headers:{
-        "Content-Type":"application/json"
-      },
-
-      body:JSON.stringify({
-        message:finalText,
-        history:currentHistory
-      })
-    });
-
-    if(!response.ok){
-      throw new Error(
-        "Server error: " + response.status
-      );
-    }
-
-    const data =
-    await response.json();
-
-    hideTyping();
-
-    if(!data.ok){
-
-      throw new Error(
-        data.error || "Nova returned an error"
-      );
-
-    }
-
-    const reply =
-    data.reply || "I couldn't generate a reply.";
-
-    lastNovaReply = reply;
-
-    messages.push({
-      role:"assistant",
-      content:reply
-    });
-
-    addMessage("assistant",reply);
-
-    saveCurrentChat();
-
-    if(settings.autoSpeak){
-      speakText(reply);
-    }
-
-  }catch(error){
-
-    hideTyping();
-
-    const errorText =
-    "Sorry, Nova connection error.\n\n" +
-    error.message;
-
-    addMessage("assistant",errorText);
-
-  }
+alert("Copy not available");
 
 }
-
-
-/* =========================
-   SAVE CHAT
-========================= */
-
-function saveCurrentChat(){
-
-  if(messages.length === 0){
-    return;
-  }
-
-  savedChats =
-  savedChats.filter(
-    chatItem =>
-    JSON.stringify(chatItem.messages)
-    !== JSON.stringify(messages)
-  );
-
-  savedChats.unshift({
-    id:Date.now(),
-    title:
-    messages.find(
-      m => m.role === "user"
-    )?.content?.slice(0,40)
-    || "Nova Chat",
-
-    messages:[...messages],
-
-    date:new Date().toLocaleString()
-  });
-
-  savedChats =
-  savedChats.slice(0,30);
-
-  localStorage.setItem(
-    "novaChats",
-    JSON.stringify(savedChats)
-  );
-}
-
-
-/* =========================
-   NEW CHAT
-========================= */
-
-function newChat(){
-
-  if(messages.length){
-    saveCurrentChat();
-  }
-
-  messages = [];
-
-  lastNovaReply = "";
-
-  chat.innerHTML = `
-    <div class="welcome" id="welcome">
-      <h1>How can I help?</h1>
-      <p>
-        I'm Nova AI. Ask me anything and I'll try my best to help.
-      </p>
-    </div>
-  `;
-
-  input.focus();
-}
-
-
-/* =========================
-   LOAD CHAT
-========================= */
-
-function loadChat(id){
-
-  const selected =
-  savedChats.find(
-    item => item.id === id
-  );
-
-  if(!selected){
-    return;
-  }
-
-  messages =
-  [...selected.messages];
-
-  chat.innerHTML = "";
-
-  messages.forEach(message => {
-
-    addMessage(
-      message.role === "user"
-      ? "user"
-      : "assistant",
-      message.content
-    );
-
-  });
-
-  historyOverlay.style.display =
-  "none";
-
-}
-
-
-/* =========================
-   HISTORY
-========================= */
-
-function showHistory(){
-
-  const list =
-  document.getElementById("historyList");
-
-  list.innerHTML = "";
-
-  if(savedChats.length === 0){
-
-    list.innerHTML =
-    "<p style='color:var(--muted)'>No saved chats yet.</p>";
-
-  }else{
-
-    savedChats.forEach(item => {
-
-      const btn =
-      document.createElement("button");
-
-      btn.className = "action";
-
-      btn.textContent =
-      "💬 " + item.title;
-
-      btn.onclick =
-      () => loadChat(item.id);
-
-      list.appendChild(btn);
-
-    });
-
-  }
-
-  historyOverlay.style.display =
-  "block";
-}
-
-
-/* =========================
-   VOICE INPUT
-========================= */
-
-function startVoice(){
-
-  const SpeechRecognition =
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-  if(!SpeechRecognition){
-
-    alert(
-      "Voice input is not supported by this browser."
-    );
-
-    return;
-  }
-
-  const recognition =
-  new SpeechRecognition();
-
-  recognition.lang = "en-IN";
-  recognition.interimResults = false;
-
-  recognition.onstart = () => {
-    document.getElementById("voiceBtn").textContent =
-    "🔴";
-  };
-
-  recognition.onresult = event => {
-
-    const spoken =
-    event.results[0][0].transcript;
-
-    input.value +=
-    (input.value ? " " : "") +
-    spoken;
-
-  };
-
-  recognition.onerror = event => {
-
-    alert(
-      "Voice error: " +
-      event.error
-    );
-
-  };
-
-  recognition.onend = () => {
-
-    document.getElementById("voiceBtn").textContent =
-    "🎤";
-
-  };
-
-  recognition.start();
-
-}
-
-
-/* =========================
-   SPEAK
-========================= */
-
-function speakText(text){
-
-  if(!("speechSynthesis" in window)){
-
-    alert(
-      "Text-to-speech is not supported."
-    );
-
-    return;
-  }
-
-  speechSynthesis.cancel();
-
-  const utterance =
-  new SpeechSynthesisUtterance(text);
-
-  utterance.lang = "en-IN";
-  utterance.rate = 1;
-  utterance.pitch = 1;
-
-  speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-/* =========================
-   FILE
-========================= */
-
-fileInput.onchange = () => {
-
-  const file =
-  fileInput.files[0];
-
-  if(!file){
-    return;
-  }
-
-  selectedFile = file;
-
-  attachment.style.display =
-  "block";
-
-  attachmentName.textContent =
-  "📎 " + file.name;
-
-  previewImage.style.display =
-  "none";
 
 };
 
+const speakBtn=document.createElement("button");
 
-/* =========================
-   IMAGE
-========================= */
+speakBtn.className="tool";
+speakBtn.textContent="🔊 Speak";
 
-imageInput.onchange = () => {
+speakBtn.onclick=()=>speak(text);
 
-  const file =
-  imageInput.files[0];
+tools.append(copy,speakBtn);
 
-  if(!file){
-    return;
-  }
+wrap.appendChild(tools);
 
-  selectedFile = file;
+}
 
-  attachment.style.display =
-  "block";
+row.appendChild(wrap);
 
-  attachmentName.textContent =
-  "🖼️ " + file.name;
+chat.insertBefore(row,typing);
 
-  previewImage.style.display =
-  "block";
+if(store){
 
-  const reader =
-  new FileReader();
+messages.push({
+role:role==="ai"?"assistant":"user",
+content:text
+});
 
-  reader.onload = event => {
+save();
+updateRecent();
 
-    previewImage.src =
-    event.target.result;
+}
 
-  };
+scroll();
 
-  reader.readAsDataURL(file);
+}
+
+function render(){
+
+document.querySelectorAll(".row")
+.forEach(x=>x.remove());
+
+$("welcome").style.display=
+messages.length?"none":"block";
+
+messages.forEach(m=>
+bubble(
+m.role==="assistant"?"ai":"user",
+m.content||"",
+false
+)
+);
+
+updateRecent();
+scroll();
+
+}
+
+function setBusy(v){
+
+busy=v;
+
+$("send").disabled=v;
+$("mic").disabled=v;
+
+typing.classList.toggle("show",v);
+
+status.textContent=
+v?"Thinking...":"Nova Ready";
+
+}
+
+async function send(textOverride){
+
+if(busy)return;
+
+const text=(
+textOverride!==undefined
+?textOverride
+:input.value
+).trim();
+
+if(!text)return;
+
+input.value="";
+resize();
+
+bubble("user",text);
+
+setBusy(true);
+
+try{
+
+const history=messages
+.slice(-20)
+.map(m=>({
+role:m.role,
+content:m.content
+}));
+
+const r=await fetch(API,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+message:text,
+history:history
+
+})
+
+});
+
+const raw=await r.text();
+
+let data;
+
+try{
+data=JSON.parse(raw);
+}catch{
+throw new Error(
+"Server returned invalid response"
+);
+}
+
+if(!r.ok||!data.ok||!data.reply){
+
+throw new Error(
+data.error||("HTTP "+r.status)
+);
+
+}
+
+bubble("ai",data.reply);
+
+if(settings.autoSpeak){
+speak(data.reply);
+}
+
+}catch(e){
+
+bubble(
+"ai",
+"Nova connection error: "+e.message
+);
+
+}finally{
+
+setBusy(false);
+
+}
+
+}
+
+function resize(){
+
+input.style.height="auto";
+
+input.style.height=
+Math.min(input.scrollHeight,120)+"px";
+
+}
+
+function speak(text){
+
+if(!("speechSynthesis" in window)){
+
+alert(
+"Speech output is not supported in this browser."
+);
+
+return;
+
+}
+
+speechSynthesis.cancel();
+
+const u=
+new SpeechSynthesisUtterance(text);
+
+u.lang=settings.lang;
+u.rate=1;
+u.pitch=1;
+
+speechSynthesis.speak(u);
+
+}
+
+function voice(){
+
+const SR=
+window.SpeechRecognition||
+window.webkitSpeechRecognition;
+
+if(!SR){
+
+alert(
+"Voice input ke liye Chrome use karo."
+);
+
+return;
+
+}
+
+if(listening){
+
+recognition.stop();
+return;
+
+}
+
+recognition=new SR();
+
+recognition.lang=settings.lang;
+recognition.continuous=false;
+recognition.interimResults=false;
+
+recognition.onstart=()=>{
+
+listening=true;
+
+$("mic").textContent="⏹";
+
+status.textContent="Listening...";
 
 };
 
+recognition.onresult=e=>{
 
-/* =========================
-   SEARCH
-========================= */
+const t=
+e.results[0][0].transcript;
 
-function webSearch(){
+input.value=t;
 
-  const query =
-  input.value.trim();
+resize();
 
-  if(!query){
+send();
 
-    alert(
-      "Pehle search text likho."
-    );
+};
 
-    input.focus();
+recognition.onerror=e=>{
 
-    return;
-  }
+status.textContent="Nova Ready";
 
-  window.open(
-    "https://www.google.com/search?q=" +
-    encodeURIComponent(query),
-    "_blank"
-  );
+alert(
+"Voice error: "+e.error
+);
 
-}
+};
 
+recognition.onend=()=>{
 
-/* =========================
-   EXPORT
-========================= */
+listening=false;
 
-function exportConversation(){
+$("mic").textContent="🎤";
 
-  if(messages.length === 0){
+if(!busy)
+status.textContent="Nova Ready";
 
-    alert(
-      "Conversation empty hai."
-    );
+};
 
-    return;
-  }
-
-  let text =
-  "NOVA AI CONVERSATION\n";
-  
-  text +=
-  "====================\n\n";
-
-  messages.forEach(message => {
-
-    text +=
-    (message.role === "user"
-      ? "YOU"
-      : "NOVA") +
-    ":\n";
-
-    text +=
-    message.content +
-    "\n\n";
-
-  });
-
-  const blob =
-  new Blob(
-    [text],
-    {type:"text/plain"}
-  );
-
-  const url =
-  URL.createObjectURL(blob);
-
-  const a =
-  document.createElement("a");
-
-  a.href = url;
-  a.download =
-  "nova-conversation.txt";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
+try{
+recognition.start();
+}catch{}
 
 }
 
+function openPanel(title,body){
 
-/* =========================
-   MEMORY
-========================= */
+$("panelTitle").textContent=title;
+$("panelBody").innerHTML=body;
 
-function showMemory(){
-
-  if(memory.length === 0){
-
-    alert(
-      "Nova Memory empty hai."
-    );
-
-    return;
-  }
-
-  alert(
-    "Nova Memory:\n\n" +
-    memory.join("\n")
-  );
+$("drawer").classList.add("open");
 
 }
 
+function closePanel(){
 
-/* =========================
-   CONNECTION TEST
-========================= */
-
-async function testConnection(){
-
-  try{
-
-    const response =
-    await fetch(
-      NOVA_BACKEND,
-      {
-        method:"POST",
-
-        headers:{
-          "Content-Type":"application/json"
-        },
-
-        body:JSON.stringify({
-          message:
-          "Hello Nova, connection test",
-          history:[]
-        })
-      }
-    );
-
-    const data =
-    await response.json();
-
-    alert(
-      data.ok
-      ? "✅ Nova Connected!\n\n" +
-        data.reply
-      : "❌ Nova Error\n\n" +
-        JSON.stringify(data)
-    );
-
-  }catch(error){
-
-    alert(
-      "❌ Connection Failed\n\n" +
-      error.message
-    );
-
-  }
+$("drawer").classList.remove("open");
 
 }
 
+function updateRecent(){
 
-/* =========================
-   CLEAR DATA
-========================= */
+const r=$("recent");
 
-function clearData(){
+r.innerHTML="";
 
-  const ok =
-  confirm(
-    "Kya aap Nova ka saved history aur settings clear karna chahte ho?"
-  );
+const users=
+messages
+.filter(m=>m.role==="user")
+.slice(-5)
+.reverse();
 
-  if(!ok){
-    return;
-  }
+users.forEach(m=>{
 
-  localStorage.removeItem(
-    "novaChats"
-  );
+const b=document.createElement("button");
 
-  localStorage.removeItem(
-    "novaSettings"
-  );
+b.className="sidebtn";
 
-  localStorage.removeItem(
-    "novaMemory"
-  );
+b.textContent=
+m.content.slice(0,28);
 
-  savedChats = [];
-  memory = [];
+b.onclick=()=>{
 
-  alert(
-    "✅ Nova data clear ho gaya."
-  );
+input.value=m.content;
+
+resize();
+
+};
+
+r.appendChild(b);
+
+});
 
 }
 
+$("send").onclick=()=>send();
 
-/* =========================
-   BUTTONS
-========================= */
+$("mic").onclick=voice;
 
-sendBtn.onclick =
-sendMessage;
+$("voiceBtn").onclick=voice;
 
-document.getElementById(
-  "newChatBtn"
-).onclick =
-newChat;
+$("speakBtn").onclick=()=>{
 
-document.getElementById(
-  "historyBt
+if(lastAI)
+speak(lastAI);
+else
+alert("Pehle Nova ka reply aane do.");
+
+};
+
+input.oninput=resize;
+
+input.onkeydown=e=>{
+
+if(e.key==="Enter"&&!e.shiftKey){
+
+e.preventDefault();
+
+send();
+
+}
+
+};
+
+document
+.querySelectorAll(".quick button")
+.forEach(b=>
+b.onclick=()=>send(b.dataset.q)
+);
+
+$("newBtn").onclick=()=>{
+
+if(
+messages.length &&
+!confirm("Start a new chat?")
+)return;
+
+messages=[];
+
+save();
+
+render();
+
+};
+
+$("settingsBtn").onclick=
+$("gearBtn").onclick=()=>{
+
+openPanel(
+"Nova Settings",
+
+`
+
+<label>Assistant language</label>
+
+<select id="setLang">
+
+<option value="en-IN">
+English (India)
+</option>
+
+<option value="hi-IN">
+Hindi
+</option>
+
+<option value="en-US">
+English (US)
+</option>
+
+</select>
+
+<label>Voice output</label>
+
+<select id="setSpeak">
+
+<option value="off">
+Off
+</option>
+
+<option value="on">
+Auto speak
+</option>
+
+</select>
+
+<button class="pbtn" id="exportChat">
+📤 Export chat
+</button>
+
+<button class="pbtn" id="resetData">
+⚠️ Reset local data
+</button>
+
+<p class="hint">
+API key browser me nahi rakhi gayi hai.
+Nova frontend secure Worker endpoint ko call karta hai.
+</p>
+
+`
+
+);
+
+};
+
+$("toolsBtn").onclick=()=>{
+
+openPanel(
+"Tools & APIs",
+
+`
+
+<button class="pbtn" id="testApi">
+🔌 Test Nova AI connection
+</button>
+
+<button class="pbtn" id="googleSearch">
+🔎 Search Google
+</button>
+
+<p class="hint">
+Google Search browser me khulega.
+File/Image buttons attachment ke liye hain.
+AI file/image understanding alag backend feature hai.
+</p>
+
+`
+
+);
+
+};
+
+$("memoryBtn").onclick=()=>{
+
+openPanel(
+"Nova Memory",
+
+`
+
+<p class="hint">
+Current chat local device par save hoti hai.
+</p>
+
+<button class="pbtn" id="showMemory">
+🧠 Show saved chat count
+</button>
+
+`
+
+);
+
+};
+
+$("chatBtn").onclick=()=>{
+
+$("chat").scrollTop=
+$("chat").scrollHeight;
+
+closePanel();
+
+};
+
+$("menuBtn").onclick=()=>{
+
+const s=$("side");
+
+if(
+window.innerWidth<=700
+){
+
+s.style.display=
+s.style.display==="flex"
+?"none"
+:"flex";
+
+s.style.position="absolute";
+s.style.zIndex="30";
+s.style.height="100%";
+
+}
+
+};
+
+$("fileBtn").onclick=()=>{
+
+$("fileInput").click();
+
+};
+
+$("imageBtn").onclick=()=>{
+
+$("imageInput").click();
+
+};
+
+$("fileInput").onchange=e=>{
+
+const f=e.target.files[0];
+
+if(f){
+
+input.value+=
+" [File: "+f.name+"]";
+
+resize();
+
+}
+
+e.target.value="";
+
+};
+
+$("imageInput").onchange=e=>{
+
+const f=e.target.files[0];
+
+if(f){
+
+input.value+=
+" [Image: "+f.name+"]";
+
+resize();
+
+}
+
+e.target.value="";
+
+};
+
+$("closePanel").onclick=closePanel;
+
+$("drawer").onclick=e=>{
+
+if(e.target===$("drawer"))
+closePanel();
+
+};
+
+$("panelBody").addEventListener(
+"change",
+e=>{
+
+if(e.target.id==="setLang"){
+
+settings.lang=e.target.value;
+
+saveSet();
+
+}
+
+if(e.target.id==="setSpeak"){
+
+settings.autoSpeak=
+e.target.value==="on";
+
+saveSet();
+
+}
+
+});
+
+$("panelBody").addEventListener(
+"click",
+async e=>{
+
+if(e.target.id==="exportChat"){
+
+const a=
+document.createElement("a");
+
+a.href=
+URL.createObjectURL(
+new Blob(
+[
+JSON.stringify(
+{messages,settings},
+null,
+2
+)
+],
+{type:"application/json"}
+)
+);
+
+a.download="nova-chat.json";
+
+a.click();
+
+}
+
+if(e.target.id==="resetData"){
+
+if(
+confirm(
+"Pura local Nova data delete kare?"
+)
+){
+
+localStorage.clear();
+
+location.reload();
+
+}
+
+}
+
+if(e.target.id==="testApi"){
+
+e.target.textContent="Testing...";
+
+try{
+
+const r=await fetch(API,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+message:
+"Hello Nova, connection test",
+
+history:[]
+
+})
+
+});
+
+const d=await r.json();
+
+alert(
+d.ok
+?"✅ Nova Connected!\n\n"+d.reply
+:"❌ Nova Error\n\n"+
+JSON.stringify(d)
+);
+
+}catch(err){
+
+alert(
+"❌ Connection failed\n\n"+
+err.message
+);
+
+}
+
+e.target.textContent=
+"🔌 Test Nova AI connection";
+
+}
+
+if(e.target.id==="googleSearch"){
+
+const q=
+prompt("Kya search karna hai?");
+
+if(q){
+
+window.open(
+"https://www.google.com/search?q="+
+encodeURIComponent(q),
+"_blank"
+);
+
+}
+
+}
+
+if(e.target.id==="showMemory"){
+
+alert(
+"Saved chat messages: "+
+messages.length
+);
+
+}
+
+});
+
+render();
+resize();
+
+</script>
+
+</body>
+  </html>
