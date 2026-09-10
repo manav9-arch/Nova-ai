@@ -192,3 +192,210 @@ body {
 
 </div>
 </script>
+<!-- NOVA AI INTERFACE : START -->
+
+<style>
+#nova-interface{
+  position:fixed;
+  inset:0;
+  background:#070b18;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  display:flex;
+  flex-direction:column;
+  z-index:9999;
+}
+
+#nova-head{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  background:#0d1328;
+  border-bottom:1px solid #252c49;
+}
+
+#nova-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+#nova-orb{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6c63ff,#00d4ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 22px #4d6cff;
+}
+
+#nova-online{
+  font-size:12px;
+  color:#65f7a5;
+}
+
+#nova-screen{
+  flex:1;
+  overflow-y:auto;
+  padding:25px 16px 120px;
+}
+
+#nova-welcome{
+  text-align:center;
+  margin-top:15vh;
+}
+
+#nova-welcome h1{
+  font-size:32px;
+  margin:12px 0;
+}
+
+#nova-welcome p{
+  color:#9da6c7;
+}
+
+.nova-msg{
+  max-width:85%;
+  margin:14px 0;
+  padding:13px 16px;
+  border-radius:17px;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
+.nova-user{
+  margin-left:auto;
+  background:#3d4fd3;
+}
+
+.nova-ai{
+  margin-right:auto;
+  background:#151c35;
+  border:1px solid #252d4b;
+}
+
+#nova-bottom{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:12px;
+  background:#0b1022;
+  border-top:1px solid #252c49;
+}
+
+#nova-input-box{
+  display:flex;
+  gap:8px;
+  align-items:end;
+  background:#141b31;
+  border:1px solid #303957;
+  border-radius:17px;
+  padding:8px;
+}
+
+#nova-text{
+  flex:1;
+  min-height:42px;
+  max-height:120px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  padding:10px;
+  font-size:15px;
+}
+
+.nova-action{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:12px;
+  background:#252d4b;
+  color:white;
+  font-size:18px;
+}
+
+#nova-send{
+  background:#4b5bea;
+}
+
+#nova-tools{
+  display:flex;
+  gap:7px;
+  margin-top:8px;
+  overflow-x:auto;
+}
+
+.nova-tool{
+  border:0;
+  background:#171f39;
+  color:#bfc7e5;
+  padding:8px 12px;
+  border-radius:10px;
+  white-space:nowrap;
+}
+</style>
+
+<div id="nova-interface">
+
+  <header id="nova-head">
+
+    <div id="nova-brand">
+      <div id="nova-orb">✦</div>
+      <span>Nova AI</span>
+    </div>
+
+    <div id="nova-online">● Online</div>
+
+  </header>
+
+  <main id="nova-screen">
+
+    <div id="nova-welcome">
+      <div style="font-size:55px;">✦</div>
+      <h1>Hello, I'm Nova</h1>
+      <p>Your intelligent personal AI assistant.</p>
+    </div>
+
+  </main>
+
+  <div id="nova-bottom">
+
+    <div id="nova-input-box">
+
+      <button class="nova-action" id="nova-attach">＋</button>
+
+      <textarea
+        id="nova-text"
+        placeholder="Message Nova..."
+        rows="1"
+      ></textarea>
+
+      <button class="nova-action" id="nova-mic">🎙</button>
+
+      <button class="nova-action" id="nova-send">➤</button>
+
+    </div>
+
+    <div id="nova-tools">
+
+      <button class="nova-tool">📎 File</button>
+      <button class="nova-tool">🖼 Image</button>
+      <button class="nova-tool">🎤 Voice</button>
+      <button class="nova-tool">＋ New Chat</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- NOVA AI INTERFACE : END -->
