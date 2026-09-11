@@ -1,1400 +1,230 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#0b0d10">
-<title>Nova AI • JARVIS</title>
 
-<style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-margin:0;width:100%;height:100%;
-background:#070a12;color:#fff;
-font-family:Arial,sans-serif
-}
-body{overflow:hidden}
-button,textarea,input,select{font:inherit}
-button{cursor:pointer}
-
-#app{
-height:100dvh;
-display:flex;
-background:#070a12
-}
+<html lang="en">    
+<head>    
+<meta charset="utf-8">    
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">    
+<meta name="theme-color" content="#0b0d10">    
+<title>Nova AI</title>  <style>    
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}    
+html,body{margin:0;width:100%;height:100%;background:#070a12;color:#fff;font-family:Arial,sans-serif}    
+body{overflow:hidden}    
+button,textarea,input,select{font:inherit}    
+button{cursor:pointer}    #app{height:100dvh;display:flex;background:#070a12}
 
 #side{
-width:220px;
-min-width:220px;
-background:#0d1322;
-border-right:1px solid #1c2435;
-padding:12px;
-display:flex;
-flex-direction:column;
-gap:8px
+width:220px;min-width:220px;background:#0d1322;
+border-right:1px solid #1c2435;padding:12px;
+display:flex;flex-direction:column;gap:8px
 }
 
-.brand{
-display:flex;
-align-items:center;
-gap:9px;
-padding:3px 4px 8px;
-font-weight:800;
-font-size:17px
-}
+.brand{display:flex;align-items:center;gap:9px;padding:3px 4px 8px;font-weight:800;font-size:17px}
 
 .logo{
-width:32px;
-height:32px;
-border-radius:10px;
+width:32px;height:32px;border-radius:10px;
 background:linear-gradient(135deg,#4e8cff,#8d35ff);
-display:grid;
-place-items:center
+display:grid;place-items:center
 }
 
 .sidebtn{
-border:1px solid #202a40;
-background:#111a2c;
-color:#dce3ef;
-border-radius:9px;
-padding:9px;
-text-align:left
+border:1px solid #202a40;background:#111a2c;color:#dce3ef;
+border-radius:9px;padding:9px;text-align:left
 }
 
 .sidebtn.primary{
 background:linear-gradient(135deg,#4b2cff,#7447ff);
-border:0;
-color:#fff;
-text-align:center;
-font-weight:700
+border:0;color:#fff;text-align:center;font-weight:700
 }
 
 .section{
-font-size:10px;
-color:#69758a;
-margin:8px 4px 2px;
+font-size:10px;color:#69758a;margin:8px 4px 2px;
 text-transform:uppercase
 }
 
-#main{
-flex:1;
-min-width:0;
-display:flex;
-flex-direction:column
-}
+#main{flex:1;min-width:0;display:flex;flex-direction:column}
 
 #top{
-height:56px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 12px;
-border-bottom:1px solid #1b2333;
-background:#0b1020
+height:56px;display:flex;align-items:center;justify-content:space-between;
+padding:0 12px;border-bottom:1px solid #1b2333;background:#0b1020
 }
 
 .topbtn{
-width:36px;
-height:36px;
-border:0;
-border-radius:9px;
-background:#121a2b;
-color:#fff
+width:36px;height:36px;border:0;border-radius:9px;
+background:#121a2b;color:#fff
 }
 
-.status{
-font-size:11px;
-color:#7b8799
-}
-
-.status b{
-color:#31d27a
-}
+.status{font-size:11px;color:#7b8799}
+.status b{color:#31d27a}
 
 #chat{
-flex:1;
-overflow:auto;
-padding:22px 14px 16px
+flex:1;overflow:auto;padding:22px 14px 16px
 }
 
 .welcome{
-text-align:center;
-max-width:650px;
-margin:70px auto 0
+text-align:center;max-width:650px;margin:70px auto 0
 }
 
 .biglogo{
-width:76px;
-height:76px;
-border-radius:22px;
-margin:auto;
+width:76px;height:76px;border-radius:22px;margin:auto;
 background:linear-gradient(135deg,#9a65ff,#1c8cff);
-display:grid;
-place-items:center;
-font-size:34px;
-font-weight:900
+display:grid;place-items:center;font-size:34px;font-weight:900
 }
 
-.welcome h1{
-font-size:30px;
-margin:18px 0 8px
-}
-
-.welcome p{
-color:#8792a4;
-font-size:13px;
-line-height:1.5
-}
+.welcome h1{font-size:30px;margin:18px 0 8px}
+.welcome p{color:#8792a4;font-size:13px;line-height:1.5}
 
 .quick{
-display:flex;
-gap:7px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:15px
+display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:15px
 }
 
 .quick button{
-border:1px solid #202a3d;
-background:#10182a;
-color:#d9e0eb;
-border-radius:18px;
-padding:7px 10px
+border:1px solid #202a3d;background:#10182a;color:#d9e0eb;
+border-radius:18px;padding:7px 10px
 }
 
-.row{
-display:flex;
-margin:13px 0
-}
-
-.row.user{
-justify-content:flex-end
-}
-
-.wrap{
-max-width:min(82%,680px)
-}
+.row{display:flex;margin:13px 0}
+.row.user{justify-content:flex-end}
+.wrap{max-width:min(82%,680px)}
 
 .bubble{
-padding:12px 14px;
-border-radius:16px;
-line-height:1.5;
-font-size:15px;
-white-space:pre-wrap;
-overflow-wrap:anywhere
+padding:12px 14px;border-radius:16px;line-height:1.5;
+font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere
 }
 
 .user .bubble{
-background:#2867e8;
-border-bottom-right-radius:5px
+background:#2867e8;border-bottom-right-radius:5px
 }
 
 .ai .bubble{
-background:#171a20;
-border:1px solid #20242d;
+background:#171a20;border:1px solid #20242d;
 border-bottom-left-radius:5px
 }
 
-.tools{
-display:flex;
-gap:5px;
-margin-top:4px
-}
+.tools{display:flex;gap:5px;margin-top:4px}
 
 .tool{
-border:0;
-background:transparent;
-color:#7d8796;
-padding:4px 7px;
-font-size:11px
+border:0;background:transparent;color:#7d8796;
+padding:4px 7px;font-size:11px
 }
 
 .typing{
-display:none;
-width:max-content;
-padding:10px 13px;
-background:#171a20;
-border-radius:15px
+display:none;width:max-content;padding:10px 13px;
+background:#171a20;border-radius:15px
 }
 
-.typing.show{
-display:flex;
-gap:4px
-}
+.typing.show{display:flex;gap:4px}
 
 .dot{
-width:6px;
-height:6px;
-border-radius:50%;
-background:#a5afbd
+width:6px;height:6px;border-radius:50%;background:#a5afbd
 }
 
 #composer{
-padding:9px 12px 11px;
-border-top:1px solid #1b2333;
+padding:9px 12px 11px;border-top:1px solid #1b2333;
 background:#0b1020
 }
 
 .box{
-border:1px solid #202a3b;
-background:#111827;
-border-radius:17px;
-padding:7px;
-display:flex;
-align-items:flex-end;
-gap:6px
+border:1px solid #202a3b;background:#111827;
+border-radius:17px;padding:7px;display:flex;
+align-items:flex-end;gap:6px
 }
 
 #input{
-flex:1;
-min-width:0;
-max-height:120px;
-resize:none;
-border:0;
-outline:0;
-background:transparent;
-color:#fff;
-padding:8px;
-line-height:1.4
+flex:1;min-width:0;max-height:120px;resize:none;
+border:0;outline:0;background:transparent;color:#fff;
+padding:8px;line-height:1.4
 }
 
 .iconbtn{
-width:38px;
-height:38px;
-border:0;
-border-radius:11px;
-background:#182235;
-color:#fff
+width:38px;height:38px;border:0;border-radius:11px;
+background:#182235;color:#fff
 }
 
-#send{
-background:linear-gradient(135deg,#4b2cff,#287cff)
-}
+#send{background:linear-gradient(135deg,#4b2cff,#287cff)}
 
-#fileInput{
-display:none
-}
+#fileInput{display:none}
 
 .preview{
-font-size:11px;
-color:#8f9bad;
-padding:4px 8px;
-display:none
-}
-
-/* =========================
-   JARVIS ACTIVITY PANEL
-========================= */
-
-#jarvisBar{
-display:none;
-position:fixed;
-left:50%;
-bottom:78px;
-transform:translateX(-50%);
-z-index:900;
-width:min(620px,calc(100% - 24px));
-background:#0d1322;
-border:1px solid #35435e;
-border-radius:14px;
-padding:10px 12px;
-box-shadow:0 12px 40px rgba(0,0,0,.45)
-}
-
-#jarvisBar.show{
-display:block
-}
-
-.jTop{
-display:flex;
-justify-content:space-between;
-font-size:11px;
-color:#9ba8bb
-}
-
-.jTop b{
-color:#fff
-}
-
-.jStatus{
-margin-top:5px;
-font-size:12px;
-color:#dbe3ee
-}
-
-.jSteps{
-margin-top:7px;
-display:flex;
-gap:5px;
-flex-wrap:wrap
-}
-
-.jStep{
-font-size:9px;
-padding:4px 7px;
-border-radius:8px;
-background:#172033;
-color:#76849a
-}
-
-.jStep.active{
-background:#4b2cff;
-color:#fff
-}
-
-/* =========================
-   CONTROL CENTER
-========================= */
-
-#controlOverlay{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.72);
-z-index:1000;
-padding:12px
-}
-
-#controlOverlay.show{
-display:flex;
-align-items:center;
-justify-content:center
-}
-
-#controlPanel{
-width:min(760px,100%);
-max-height:92dvh;
-overflow:auto;
-background:#0d1322;
-border:1px solid #27334a;
-border-radius:18px;
-box-shadow:0 20px 70px rgba(0,0,0,.55)
-}
-
-.controlHead{
-position:sticky;
-top:0;
-z-index:2;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:15px;
-background:#0d1322;
-border-bottom:1px solid #202a40
-}
-
-.controlTitle{
-font-weight:800
-}
-
-.controlSub{
-font-size:11px;
-color:#78869b;
-margin-top:3px
-}
-
-.closeBtn{
-border:0;
-background:#182235;
-color:#fff;
-border-radius:9px;
-width:36px;
-height:36px
-}
-
-.tabs{
-display:flex;
-gap:6px;
-padding:10px;
-overflow:auto;
-border-bottom:1px solid #202a40
-}
-
-.tab{
-white-space:nowrap;
-border:1px solid #27334a;
-background:#111a2c;
-color:#cbd4e2;
-border-radius:10px;
-padding:8px 12px
-}
-
-.tab.active{
-background:#4b2cff;
-color:#fff;
-border-color:#4b2cff
-}
-
-.controlBody{
-padding:12px
-}
-
-.tabPage{
-display:none
-}
-
-.tabPage.active{
-display:block
-}
-
-.card{
-border:1px solid #202a40;
-background:#111827;
-border-radius:14px;
-padding:12px;
-margin-bottom:10px
-}
-
-.card h3{
-font-size:14px;
-margin:0 0 5px
-}
-
-.card p{
-font-size:11px;
-color:#7f8ba0;
-margin:0 0 10px;
-line-height:1.5
-}
-
-.setting{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-padding:9px 0;
-border-top:1px solid #202a40
-}
-
-.setting:first-of-type{
-border-top:0
-}
-
-.setting span{
-font-size:13px
-}
-
-.setting small{
-display:block;
-color:#718097;
-font-size:10px;
-margin-top:3px
-}
-
-.toggle{
-width:44px;
-height:25px;
-border:0;
-border-radius:20px;
-background:#303a4d;
-position:relative
-}
-
-.toggle i{
-position:absolute;
-top:4px;
-left:4px;
-width:17px;
-height:17px;
-background:#fff;
-border-radius:50%;
-transition:.18s
-}
-
-.toggle.on{
-background:#4b2cff
-}
-
-.toggle.on i{
-left:23px
-}
-
-.select,
-.textInput{
-width:100%;
-border:1px solid #29364d;
-background:#0b1220;
-color:#fff;
-border-radius:9px;
-padding:9px;
-outline:none
-}
-
-.modeGrid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px
-}
-
-.modeBtn{
-border:1px solid #29364d;
-background:#111a2c;
-color:#dce3ef;
-border-radius:11px;
-padding:11px;
-text-align:left
-}
-
-.modeBtn.active{
-border-color:#7447ff;
-background:#211747
-}
-
-.featureRow{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:8px;
-padding:10px 0;
-border-bottom:1px solid #202a40
-}
-
-.featureRow:last-child{
-border-bottom:0
-}
-
-.featureName{
-font-size:13px
-}
-
-.featureMeta{
-font-size:10px;
-color:#738197
-}
-
-.featureActions{
-display:flex;
-gap:5px
-}
-
-.mini{
-border:1px solid #29364d;
-background:#182235;
-color:#fff;
-border-radius:7px;
-padding:5px 7px;
-font-size:10px
-}
-
-.actionBtn{
-border:0;
-background:#4b2cff;
-color:#fff;
-border-radius:9px;
-padding:9px 12px
-}
-
-.secondary{
-background:#182235
-}
-
-.codeBox{
-width:100%;
-min-height:120px;
-resize:vertical;
-border:1px solid #29364d;
-background:#080d17;
-color:#dce6f5;
-border-radius:9px;
-padding:10px;
-font-family:monospace;
-font-size:11px
-}
-
-#jarvisModeBadge{
-font-size:9px;
-color:#9ba8bb;
-margin-left:7px
+font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 }
 
 @media(max-width:700px){
-
-#side{
-display:none
+#side{display:none}
+.wrap{max-width:88%}
+.welcome{margin-top:45px}
+.welcome h1{font-size:26px}
 }
-
-.wrap{
-max-width:88%
-}
-
-.welcome{
-margin-top:45px
-}
-
-.welcome h1{
-font-size:26px
-}
-
-#controlOverlay{
-padding:6px
-}
-
-#controlPanel{
-max-height:96dvh;
-border-radius:15px
-}
-
-.modeGrid{
-grid-template-columns:1fr
-}
-
-}
-</style>
-</head>
-
-<body>
-
-<div id="app">
-
-<aside id="side">
-
-<div class="brand">
-<div class="logo">N</div>
-<span>Nova AI</span>
-</div>
-
-<button class="sidebtn primary" id="newChat">
-＋ New Chat
-</button>
-
-<button class="sidebtn" id="searchChats">
-🔎 Search Chats
-</button>
-
-<div class="section">
-Tools
-</div>
-
-<button class="sidebtn" id="testConnection">
-🔌 Test Connection
-</button>
-
-<button class="sidebtn" id="googleSearch">
-🌐 Google Search
-</button>
-
-<button class="sidebtn" id="showMemory">
-🧠 Memory
-</button>
-
-<button class="sidebtn" id="settings">
-🎛️ Control Center
-</button>
-
-</aside>
-
-<main id="main">
-
-<header id="top">
-
-<button class="topbtn" id="mobileMenu">
-☰
-</button>
-
-<div>
-<b>
-Nova AI
-<span id="jarvisModeBadge">• JARVIS Ready</span>
-</b>
-
-<div class="status">
-● <b>Online</b>
-</div>
-
-</div>
-
-<button class="topbtn" id="clearChat">
-🗑
-</button>
-
-</header>
-
-<section id="chat">
-
-<div class="welcome" id="welcome">
-
-<div class="biglogo">
-N
-</div>
-
-<h1>
-Nova AI
-</h1>
-
-<p>
-Your AI assistant. Nova is the brain; JARVIS is the control layer.
-Ask anything, use your voice, attach text files, or open the Control Center.
-</p>
-
-<div class="quick">
-
-<button data-q="Explain artificial intelligence simply">
-Explain AI
-</button>
-
-<button data-q="Write a short motivational message">
-Motivation
-</button>
-
-<button data-q="Give me 5 useful study tips">
-Study tips
-</button>
-
-</div>
-
-</div>
-
-<div class="typing" id="typing">
-
-<span class="dot"></span>
-<span class="dot"></span>
-<span class="dot"></span>
-
-</div>
-
-</section>
-
-<footer id="composer">
-
-<div class="preview" id="preview"></div>
-
-<div class="box">
-
-<button class="iconbtn" id="attach">
-＋
-</button>
-
-<textarea
-id="input"
-rows="1"
-placeholder="Message Nova AI..."
-></textarea>
-
-<button class="iconbtn" id="mic">
-🎙️
-</button>
-
-<button class="iconbtn" id="send">
-➤
-</button>
-
-</div>
-
-<input
-id="fileInput"
-type="file"
-accept=".txt,.md,.json,.csv,.js,.html,.css,.py,.java,.xml,.yaml,.yml,.log"
->
-
-</footer>
-
-</main>
-</div>
-
-
-<!-- =========================
-     JARVIS STATUS
-========================= -->
-
-<div id="jarvisBar">
-
-<div class="jTop">
-<b>🤖 JARVIS CONTROL</b>
-<span>Assistant Mode</span>
-</div>
-
-<div class="jStatus" id="jStatus">
-Ready. Waiting for your command.
-</div>
-
-<div class="jSteps">
-
-<span class="jStep" id="jsUnderstand">
-Understand
-</span>
-
-<span class="jStep" id="jsCheck">
-Permission
-</span>
-
-<span class="jStep" id="jsAction">
-Action
-</span>
-
-<span class="jStep" id="jsResult">
-Result
-</span>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     CONTROL CENTER
-========================= -->
-
-<div id="controlOverlay">
-
-<div id="controlPanel">
-
-<div class="controlHead">
-
-<div>
-
-<div class="controlTitle">
-🎛️ Nova + JARVIS Control Center
-</div>
-
-<div class="controlSub">
-Brain • Assistant • Permissions • Features
-</div>
-
-</div>
-
-<button class="closeBtn" id="closeControl">
-✕
-</button>
-
-</div>
-
-
-<div class="tabs">
-
-<button class="tab active" data-tab="novaTab">
-🧠 Nova
-</button>
-
-<button class="tab" data-tab="jarvisTab">
-🤖 JARVIS
-</button>
-
-<button class="tab" data-tab="featuresTab">
-🧩 Features
-</button>
-
-<button class="tab" data-tab="developerTab">
-🛠 Developer
-</button>
-
-</div>
-
-
-<div class="controlBody">
-
-
-<!-- NOVA -->
-
-<div class="tabPage active" id="novaTab">
-
-<div class="card">
-
-<h3>
-🧠 Nova Brain
-</h3>
-
-<p>
-Control Nova's response behavior.
-</p>
-
-<div class="setting">
-
-<span>
-Response length
-<small>
-How detailed Nova should be
-</small>
-</span>
-
-<select class="select" id="novaLength" style="width:140px">
-
-<option value="short">
-Short
-</option>
-
-<option value="balanced">
-Balanced
-</option>
-
-<option value="detailed">
-Detailed
-</option>
-
-</select>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Language
-<small>
-Preferred response language
-</small>
-</span>
-
-<select class="select" id="novaLanguage" style="width:140px">
-
-<option>
-English
-</option>
-
-<option>
-Hindi
-</option>
-
-<option>
-Hinglish
-</option>
-
-<option>
-Auto
-</option>
-
-</select>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Personality
-<small>
-Nova communication style
-</small>
-</span>
-
-<select class="select" id="novaPersonality" style="width:140px">
-
-<option>
-Helpful
-</option>
-
-<option>
-Friendly
-</option>
-
-<option>
-Professional
-</option>
-
-<option>
-Creative
-</option>
-
-</select>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Auto speak
-<small>
-Speak replies automatically
-</small>
-</span>
-
-<button class="toggle" id="toggleAutoSpeak">
-<i></i>
-</button>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Memory context
-<small>
-Include saved memory in requests
-</small>
-</span>
-
-<button class="toggle" id="toggleMemory">
-<i></i>
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-Current Mode
-</h3>
-
-<div class="modeGrid">
-
-<button class="modeBtn active" data-mode="nova">
-🧠 Nova Mode
-<br>
-<small>
-Conversation first
-</small>
-</button>
-
-<button class="modeBtn" data-mode="jarvis">
-🤖 JARVIS Mode
-<br>
-<small>
-Control first
-</small>
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- JARVIS -->
-
-<div class="tabPage" id="jarvisTab">
-
-<div class="card">
-
-<h3>
-🤖 JARVIS Assistant
-</h3>
-
-<p>
-JARVIS is the control layer. This web version provides
-the command/status architecture. Real phone actions can
-later be connected through native Android permissions.
-</p>
-
-
-<div class="setting">
-
-<span>
-JARVIS mode
-<small>
-Enable assistant layer
-</small>
-</span>
-
-<button class="toggle" id="toggleJarvis">
-<i></i>
-</button>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Confirm actions
-<small>
-Ask before future actions
-</small>
-</span>
-
-<button class="toggle" id="toggleConfirm">
-<i></i>
-</button>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Voice commands
-<small>
-Enable voice command interface
-</small>
-</span>
-
-<button class="toggle" id="toggleVoiceCommands">
-<i></i>
-</button>
-
-</div>
-
-
-<div class="setting">
-
-<span>
-Activity display
-<small>
-Show safe activity status
-</small>
-</span>
-
-<button class="toggle" id="toggleActivity">
-<i></i>
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-JARVIS Command Pipeline
-</h3>
-
-<p>
-Future commands follow this controlled flow.
-</p>
-
-<div class="jSteps">
-
-<span class="jStep active">
-Command
-</span>
-
-<span class="jStep">
-Understand
-</span>
-
-<span class="jStep">
-Permission
-</span>
-
-<span class="jStep">
-Action
-</span>
-
-<span class="jStep">
-Result
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- FEATURES -->
-
-<div class="tabPage" id="featuresTab">
-
-<div class="card">
-
-<h3>
-🧩 Feature Manager
-</h3>
-
-<p>
-Enable or disable Nova/JARVIS capabilities.
-</p>
-
-<div id="featureList">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- DEVELOPER -->
-
-<div class="tabPage" id="developerTab">
-
-<div class="card">
-
-<h3>
-➕ Add Feature
-</h3>
-
-<p>
-Create a future feature/module definition.
-</p>
-
-<input
-class="textInput"
-id="featureName"
-placeholder="Feature name"
-style="margin-bottom:7px"
->
-
-<input
-class="textInput"
-id="featureCommand"
-placeholder="Example: open calculator"
-style="margin-bottom:7px"
->
-
-<select
-class="select"
-id="featurePermission"
-style="margin-bottom:7px"
->
-
-<option value="none">
-No special permission
-</option>
-
-<option value="confirm">
-Ask confirmation
-</option>
-
-<option value="device">
-Device permission (future native)
-</option>
-
-</select>
-
-<textarea
-class="codeBox"
-id="featureCode"
-placeholder="// Future module logic / API configuration
-// Never put secret API keys here."
-></textarea>
-
-<div style="display:flex;gap:7px;margin-top:7px">
-
-<button class="actionBtn" id="saveFeature">
-Save Feature
-</button>
-
-<button class="actionBtn secondary" id="exportConfig">
-Export Config
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-🔐 System Safety
-</h3>
-
-<p>
-Custom features are stored as module definitions.
-Arbitrary JavaScript execution is intentionally disabled.
-Native phone control can later use Android permissions.
-</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-</div>
-
-
-<script>
-
-/* =========================
-   NOVA BACKEND
+</style>  </head>  <body>  <div id="app">  <aside id="side">  <div class="brand">
+
+<div class="logo">N</div>    
+<span>Nova AI</span>    
+</div>  <button class="sidebtn primary" id="newChat">＋ New Chat</button>  <button class="sidebtn" id="searchChats">🔎 Search Chats</button>
+
+<div class="section">Tools</div>  <button class="sidebtn" id="testConnection">    
+🔌 Test Connection    
+</button>  <button class="sidebtn" id="googleSearch">    
+🌐 Google Search    
+</button>  <button class="sidebtn" id="showMemory">    
+🧠 Memory    
+</button>  <button class="sidebtn" id="settings">    
+⚙️ Settings    
+</button>  </aside>  <main id="main">  <header id="top">  <button class="topbtn" id="mobileMenu">☰</button>  <div>    
+<b>Nova AI</b>    
+<div class="status">● <b>Online</b></div>    
+</div>  <button class="topbtn" id="clearChat">🗑</button>  </header>  <section id="chat">  <div class="welcome" id="welcome">  <div class="biglogo">N</div>  <h1>Nova AI</h1>  <p>    
+Your AI assistant. Ask anything, use your voice,    
+attach text files, or try a quick prompt.    
+</p>  <div class="quick">  <button data-q="Explain artificial intelligence simply">    
+Explain AI    
+</button>  <button data-q="Write a short motivational message">    
+Motivation    
+</button>  <button data-q="Give me 5 useful study tips">    
+Study tips    
+</button>  </div>  </div>  <div class="typing" id="typing">    
+<span class="dot"></span>    
+<span class="dot"></span>    
+<span class="dot"></span>    
+</div>  </section>  <footer id="composer">  <div class="preview" id="preview"></div>  <div class="box">  <button class="iconbtn" id="attach">＋</button>  <textarea    
+id="input"    
+rows="1"    
+placeholder="Message Nova AI..."    
+></textarea>  <button class="iconbtn" id="mic">🎙️</button>  <button class="iconbtn" id="send">➤</button>
+
+</div>  <input  
+id="fileInput"  
+type="file"  
+accept=".txt,.md,.json,.csv,.js,.html,.css,.py,.java,.xml,.yaml,.yml,.log"  > 
+
+</footer>  </main>    
+</div>  <script>    /* =========================
+NOVA AI BACKEND
 ========================= */
 
 const API =
 "https://red-mountain-f307.motiharijan123456.workers.dev/chat";
 
-
 /* =========================
-   DATA
+LOCAL DATA
 ========================= */
 
 let messages =
-JSON.parse(
-localStorage.getItem("nova_messages") || "[]"
-);
+JSON.parse(localStorage.getItem("nova_messages") || "[]");
 
 let memory =
-JSON.parse(
-localStorage.getItem("nova_memory") || "[]"
-);
+JSON.parse(localStorage.getItem("nova_memory") || "[]");
 
 let pendingFile = null;
 
-
 /* =========================
-   DEFAULT SETTINGS
+HELPERS
 ========================= */
 
-const DEFAULTS = {
+const $ = id => document.getElementById(id);
 
-length:"balanced",
-
-language:"Auto",
-
-personality:"Helpful",
-
-autospeak:false,
-
-memory:true,
-
-jarvis_mode:true,
-
-jarvis_confirm:true,
-
-jarvis_voice:true,
-
-jarvis_activity:true,
-
-assistant_mode:"nova"
-
-};
-
-
-/* =========================
-   HELPERS
-========================= */
-
-const $ =
-id => document.getElementById(id);
-
-const chat =
-$("chat");
-
-const input =
-$("input");
-
-const typing =
-$("typing");
-
-const preview =
-$("preview");
-
-
-function getSetting(key){
-
-const value =
-localStorage.getItem(
-"nova_"+key
-);
-
-return value === null
-? DEFAULTS[key]
-: value;
-
-}
-
-
-function setSetting(key,value){
-
-localStorage.setItem(
-"nova_"+key,
-String(value)
-);
-
-}
-
-
-function boolSetting(key){
-
-return getSetting(key) === "true";
-
-}
-
+const chat = $("chat");
+const input = $("input");
+const typing = $("typing");
+const preview = $("preview");
 
 function save(){
 
@@ -1410,116 +240,82 @@ JSON.stringify(memory)
 
 }
 
-
 function escapeHTML(text){
 
 return String(text).replace(
 /[&<>"']/g,
-c => ({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c])
-);
+
+function(c){
+
+return {
+"&":"&",
+"<":"<",
+">":">",
+'"':""",
+"'":"'"
+}[c];
+
+});
 
 }
 
-
 /* =========================
-   RENDER
+RENDER CHAT
 ========================= */
 
 function render(){
 
-chat
-.querySelectorAll(".row")
-.forEach(x=>x.remove());
+chat.querySelectorAll(".row").forEach(
+x => x.remove()
+);
 
 if(messages.length === 0){
 
-$("welcome").style.display =
-"block";
+$("welcome").style.display = "block";
 
 return;
 
 }
 
-$("welcome").style.display =
-"none";
+$("welcome").style.display = "none";
 
+messages.forEach((m,index)=>{
 
-messages.forEach(
-(m,index)=>{
-
-const row =
-document.createElement("div");
+const row = document.createElement("div");
 
 row.className =
 "row " +
-(m.role === "user"
-? "user"
-: "ai");
+(m.role === "user" ? "user" : "ai");
 
+const wrap = document.createElement("div");
 
-const wrap =
-document.createElement("div");
-
-wrap.className =
-"wrap";
-
+wrap.className = "wrap";
 
 const bubble =
 document.createElement("div");
 
-bubble.className =
-"bubble";
+bubble.className = "bubble";
 
 bubble.innerHTML =
-escapeHTML(
-m.content
-);
+escapeHTML(m.content);
 
-wrap.appendChild(
-bubble
-);
-
+wrap.appendChild(bubble);
 
 if(m.role === "assistant"){
 
 const tools =
 document.createElement("div");
 
-tools.className =
-"tools";
+tools.className = "tools";
 
-tools.innerHTML =
-`
-<button class="tool copy">
-📋 Copy
-</button>
+tools.innerHTML =     <button class="tool copy">📋 Copy</button>     <button class="tool speak">🔊 Speak</button>     <button class="tool regen">↻ Regenerate</button>    ;
 
-<button class="tool speak">
-🔊 Speak
-</button>
-
-<button class="tool regen">
-↻ Regenerate
-</button>
-`;
-
-
-tools
-.querySelector(".copy")
-.onclick =
+tools.querySelector(".copy").onclick =
 async () => {
 
 try{
 
-await navigator
-.clipboard
-.writeText(
+await navigator.clipboard.writeText(
 m.content
 );
 
@@ -1533,57 +329,35 @@ alert("Copy failed.");
 
 };
 
-
-tools
-.querySelector(".speak")
-.onclick =
+tools.querySelector(".speak").onclick =
 () => speak(m.content);
 
-
-tools
-.querySelector(".regen")
-.onclick =
+tools.querySelector(".regen").onclick =
 () => regenerate(index);
 
-
-wrap.appendChild(
-tools
-);
+wrap.appendChild(tools);
 
 }
 
+row.appendChild(wrap);
 
-row.appendChild(
-wrap
-);
-
-chat.insertBefore(
-row,
-typing
-);
+chat.insertBefore(row,typing);
 
 });
 
-chat.scrollTop =
-chat.scrollHeight;
+chat.scrollTop = chat.scrollHeight;
 
 }
 
-
 /* =========================
-   SPEAK
+VOICE OUTPUT
 ========================= */
 
 function speak(text){
 
-if(!(
-"speechSynthesis"
-in window
-)){
+if(!("speechSynthesis" in window)){
 
-alert(
-"Voice output supported nahi hai."
-);
+alert("Voice output supported nahi hai.");
 
 return;
 
@@ -1591,128 +365,706 @@ return;
 
 speechSynthesis.cancel();
 
-speechSynthesis.speak(
-new SpeechSynthesisUtterance(text)
-);
+const utterance =
+new SpeechSynthesisUtterance(text);
+
+speechSynthesis.speak(utterance);
 
 }
 
-
 /* =========================
-   RESIZE
+TEXTAREA SIZE
 ========================= */
 
 function resize(){
 
-input.style.height =
-"auto";
+input.style.height = "auto";
 
 input.style.height =
-Math.min(
-input.scrollHeight,
-120
-)+"px";
+Math.min(input.scrollHeight,120) + "px";
 
 }
 
-
 /* =========================
-   MEMORY
+MEMORY
 ========================= */
 
 function memoryText(){
 
-if(
-!boolSetting("memory") ||
-!memory.length
-){
+if(!memory.length) return "";
 
-return "";
+return "\n\nSaved memory:\n" +
+memory.join("\n");
 
 }
 
-return (
-"\n\nSaved memory:\n" +
-memory.join("\n")
+/* =========================
+SEND MESSAGE
+========================= */
+
+async function sendMessage(
+text = input.value.trim()
+){
+
+if(!text && !pendingFile) return;
+
+let final = text;
+
+if(pendingFile){
+
+final +=
+(final ? "\n\n" : "") +
+"Attached file:\n" +
+pendingFile.text;
+
+}
+
+messages.push({
+role:"user",
+content:final
+});
+
+save();
+render();
+
+input.value = "";
+resize();
+
+pendingFile = null;
+
+preview.style.display = "none";
+preview.textContent = "";
+
+typing.classList.add("show");
+
+chat.scrollTop =
+chat.scrollHeight;
+
+try{
+
+const history =
+messages
+.slice(-20)
+.map(m => ({
+role:m.role,
+content:m.content
+}));
+
+const response =
+await fetch(API,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+message:
+final + memoryText(),
+
+history:history
+
+})
+
+});
+
+const data =
+await response.json();
+
+if(!response.ok || !data.ok){
+
+throw new Error(
+data.error || "Server error"
 );
 
 }
 
+messages.push({
 
-/* =========================
-   JARVIS STATUS
-========================= */
+role:"assistant",
 
-function setJarvisStatus(
-status,
-step
-){
+content:
+data.reply || "No reply received."
+
+});
+
+save();
+render();
 
 if(
-!boolSetting(
-"jarvis_activity"
-)
+localStorage.getItem(
+"nova_autospeak"
+) === "1"
+){
+
+speak(data.reply);
+
+}
+
+}catch(error){
+
+messages.push({
+
+role:"assistant",
+
+content:
+"❌ Connection error: " +
+error.message
+
+});
+
+save();
+render();
+
+}finally{
+
+typing.classList.remove("show");
+
+}
+
+}
+
+/* =========================
+REGENERATE
+========================= */
+
+async function regenerate(index){
+
+const previous =
+messages[index - 1];
+
+if(
+!previous ||
+previous.role !== "user"
 ){
 
 return;
 
 }
 
-$("jarvisBar")
-.classList.add(
-"show"
+messages =
+messages.slice(0,index);
+
+save();
+render();
+
+await sendMessage(
+previous.content
 );
 
-$("jStatus")
-.textContent =
-status;
+}
 
-[
-"jsUnderstand",
-"jsCheck",
-"jsAction",
-"jsResult"
-]
-.forEach(
-x =>
-$(x).classList.remove(
-"active"
+/* =========================
+NEW CHAT
+========================= */
+
+$("newChat").onclick = () => {
+
+messages = [];
+
+save();
+render();
+
+input.focus();
+
+};
+
+/* =========================
+CLEAR CHAT
+========================= */
+
+$("clearChat").onclick = () => {
+
+if(
+confirm(
+"Current chat clear karna hai?"
+)
+){
+
+messages = [];
+
+save();
+render();
+
+}
+
+};
+
+/* =========================
+SEND BUTTON
+========================= */
+
+$("send").onclick = () => {
+
+sendMessage();
+
+};
+
+/* =========================
+ENTER SEND
+========================= */
+
+input.addEventListener(
+"keydown",
+function(e){
+
+if(
+e.key === "Enter" &&
+!e.shiftKey
+){
+
+e.preventDefault();
+
+sendMessage();
+
+}
+
+});
+
+input.addEventListener(
+"input",
+resize
+);
+
+/* =========================
+FILE ATTACH
+========================= */
+
+$("attach").onclick = () => {
+
+$("fileInput").click();
+
+};
+
+$("fileInput").onchange =
+async function(e){
+
+const file =
+e.target.files[0];
+
+if(!file) return;
+
+if(file.size > 200000){
+
+alert(
+"File 200 KB se chhoti rakho."
+);
+
+return;
+
+}
+
+try{
+
+const text =
+await file.text();
+
+pendingFile = {
+
+name:file.name,
+
+text:text
+
+};
+
+preview.textContent =
+"📎 " +
+file.name +
+" attached";
+
+preview.style.display =
+"block";
+
+}catch(error){
+
+alert(
+"File read nahi ho payi."
+);
+
+}
+
+};
+
+/* =========================
+GOOGLE SEARCH
+========================= */
+
+$("googleSearch").onclick = () => {
+
+const q =
+prompt(
+"Kya search karna hai?"
+);
+
+if(q){
+
+window.open(
+"https://www.google.com/search?q=" +
+encodeURIComponent(q),
+"_blank"
+);
+
+}
+
+};
+
+/* =========================
+CONNECTION TEST
+========================= */
+
+$("testConnection").onclick =
+async function(){
+
+const button =
+$("testConnection");
+
+button.textContent =
+"⏳ Testing...";
+
+try{
+
+const response =
+await fetch(API,{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+message:
+"Hello Nova, connection test",
+
+history:[]
+
+})
+
+});
+
+const data =
+await response.json();
+
+if(data.ok){
+
+alert(
+"✅ Nova Connected!\n\n" +
+data.reply
+);
+
+}else{
+
+alert(
+"❌ Nova Error\n\n" +
+JSON.stringify(data)
+);
+
+}
+
+}catch(error){
+
+alert(
+"❌ Connection failed\n\n" +
+error.message
+);
+
+}
+
+button.textContent =
+"🔌 Test Connection";
+
+};
+
+/* =========================
+MEMORY
+========================= */
+
+$("showMemory").onclick = () => {
+
+const action =
+prompt(
+"Memory:\n" +
+"1 = Add\n" +
+"2 = View\n" +
+"3 = Clear"
+);
+
+if(action === "1"){
+
+const text =
+prompt(
+"Kya remember karna hai?"
+);
+
+if(text){
+
+memory.push(text);
+
+save();
+
+alert(
+"✅ Memory saved"
+);
+
+}
+
+}
+
+else if(action === "2"){
+
+alert(
+
+memory.length
+
+?
+
+memory
+.map(
+(x,i)=>
+(i+1) + ". " + x
+)
+.join("\n")
+
+:
+
+"No saved memory."
+
+);
+
+}
+
+else if(action === "3"){
+
+memory = [];
+
+save();
+
+alert(
+"✅ Memory cleared"
+);
+
+}
+
+};
+
+/* =========================
+SETTINGS
+========================= */
+
+$("settings").onclick = () => {
+
+const auto =
+localStorage.getItem(
+"nova_autospeak"
+) === "1";
+
+const action =
+prompt(
+
+"Settings:\n" +
+
+"1 = Auto speak " +
+(auto ? "(ON)" : "(OFF)") +
+
+"\n2 = Reset app data"
+
+);
+
+if(action === "1"){
+
+localStorage.setItem(
+"nova_autospeak",
+auto ? "0" : "1"
+);
+
+alert(
+"Auto speak " +
+(!auto ? "ON" : "OFF")
+);
+
+}
+
+if(
+action === "2" &&
+confirm(
+"Reset all Nova data?"
+)
+){
+
+localStorage.clear();
+
+location.reload();
+
+}
+
+};
+
+/* =========================
+SEARCH CHATS
+========================= */
+
+$("searchChats").onclick = () => {
+
+const q =
+prompt(
+"Chat me kya search karna hai?"
+);
+
+if(!q) return;
+
+const found =
+messages.filter(
+m =>
+m.content
+.toLowerCase()
+.includes(
+q.toLowerCase()
 )
 );
 
-if(step){
+if(found.length){
 
-$("js"+step)
-.classList.add(
-"active"
+alert(
+
+found
+.map(
+m =>
+m.role +
+": " +
+m.content.slice(0,120)
+)
+.join("\n\n")
+
+);
+
+}else{
+
+alert(
+"Kuch nahi mila."
 );
 
 }
 
-}
-
+};
 
 /* =========================
-   AI CONTEXT
+QUICK PROMPTS
 ========================= */
 
-function jarvisContext(){
+document
+.querySelectorAll(".quick button")
+.forEach(button => {
 
-return `
+button.onclick = () => {
 
-Assistant configuration:
+input.value =
+button.dataset.q;
 
-Mode:
-${getSetting("assistant_mode")}
+resize();
 
-Nova response length:
-${getSetting("length")}
+sendMessage();
 
-Nova language:
-${getSetting("language")}
+};
 
-Nova personality:
-${getSetting("personality")}
+});
 
-JARVIS mode:
-${boolSettin
+/* =========================
+VOICE INPUT
+========================= */
+
+$("mic").onclick = () => {
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+alert(
+"Is browser me voice input supported nahi hai."
+);
+
+return;
+
+}
+
+const recognition =
+new SpeechRecognition();
+
+recognition.lang =
+"en-IN";
+
+recognition.interimResults =
+false;
+
+recognition.continuous =
+false;
+
+recognition.onresult =
+function(event){
+
+const text =
+event
+.results[0][0]
+.transcript;
+
+input.value +=
+(input.value ? " " : "") +
+text;
+
+resize();
+
+};
+
+recognition.onerror =
+function(event){
+
+alert(
+"Voice error: " +
+event.error
+);
+
+};
+
+try{
+
+recognition.start();
+
+}catch(error){
+
+alert(
+"Microphone start nahi ho paya."
+);
+
+}
+
+};
+
+/* =========================
+MOBILE MENU
+========================= */
+
+$("mobileMenu").onclick = () => {
+
+alert(
+"Nova AI\n\n" +
+"Mobile version me chat controls neeche hain."
+);
+
+};
+
+/* =========================
+START
+========================= */
+
+render();
+
+resize();
+
+</script>  </body>
+
+   </html>
