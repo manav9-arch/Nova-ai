@@ -16,7 +16,7 @@ button{cursor:pointer}
 #app{height:100dvh;display:flex;background:#070a12}
 
 #side{
-width:220px;min-width:220px;background:#0d1322;
+width:235px;min-width:235px;background:#0d1322;
 border-right:1px solid #1c2435;padding:12px;
 display:flex;flex-direction:column;gap:8px
 }
@@ -42,6 +42,20 @@ border:0;color:#fff;text-align:center;font-weight:700
 .section{
 font-size:10px;color:#69758a;margin:8px 4px 2px;
 text-transform:uppercase
+}
+
+.modebar{
+display:flex;gap:5px;background:#111827;
+padding:4px;border-radius:10px;border:1px solid #202a40
+}
+
+.modebtn{
+flex:1;border:0;background:transparent;color:#8d98aa;
+padding:7px 4px;border-radius:7px;font-size:11px
+}
+
+.modebtn.active{
+background:#4b2cff;color:#fff;font-weight:700
 }
 
 #main{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -151,11 +165,156 @@ background:#182235;color:#fff
 font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 }
 
+/* =========================
+   CONTROL CENTER
+========================= */
+
+#controlOverlay{
+display:none;position:fixed;inset:0;
+background:rgba(0,0,0,.72);z-index:1000;
+align-items:center;justify-content:center;padding:14px
+}
+
+#controlOverlay.show{display:flex}
+
+#controlPanel{
+width:min(700px,100%);max-height:92dvh;overflow:auto;
+background:#0d1322;border:1px solid #26314a;
+border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.5)
+}
+
+.controlHead{
+display:flex;align-items:center;justify-content:space-between;
+padding:15px;border-bottom:1px solid #202a40;
+position:sticky;top:0;background:#0d1322;z-index:2
+}
+
+.controlHead h2{margin:0;font-size:18px}
+
+.closebtn{
+border:0;background:#182235;color:#fff;
+width:34px;height:34px;border-radius:9px
+}
+
+.controlBody{padding:14px}
+
+.controlSection{
+border:1px solid #202a40;background:#111827;
+border-radius:13px;padding:12px;margin-bottom:10px
+}
+
+.controlSection h3{
+margin:0 0 10px;font-size:14px
+}
+
+.controlRow{
+display:flex;align-items:center;justify-content:space-between;
+gap:10px;padding:9px 0;border-bottom:1px solid #1d2638
+}
+
+.controlRow:last-child{border-bottom:0}
+
+.controlLabel{
+font-size:13px;color:#dce3ef
+}
+
+.controlDesc{
+font-size:10px;color:#778397;margin-top:3px
+}
+
+.controlRow select,
+.controlRow input[type="text"]{
+background:#0b1020;color:#fff;border:1px solid #28334a;
+border-radius:8px;padding:7px;max-width:170px
+}
+
+.switch{
+position:relative;width:44px;height:24px;flex:none
+}
+
+.switch input{display:none}
+
+.slider{
+position:absolute;inset:0;background:#28334a;
+border-radius:20px;transition:.2s
+}
+
+.slider:before{
+content:"";position:absolute;width:18px;height:18px;
+left:3px;top:3px;background:#fff;border-radius:50%;
+transition:.2s
+}
+
+.switch input:checked + .slider{
+background:#4b2cff
+}
+
+.switch input:checked + .slider:before{
+transform:translateX(20px)
+}
+
+/* =========================
+   PLUGIN MANAGER
+========================= */
+
+.feature{
+display:flex;align-items:center;gap:10px;
+padding:10px 0;border-bottom:1px solid #1d2638
+}
+
+.feature:last-child{border-bottom:0}
+
+.featureIcon{
+width:34px;height:34px;border-radius:9px;
+background:#182235;display:grid;place-items:center
+}
+
+.featureInfo{flex:1;min-width:0}
+
+.featureName{font-size:13px;font-weight:700}
+.featureDesc{font-size:10px;color:#778397;margin-top:3px}
+
+.featureActions{display:flex;gap:5px}
+
+.smallBtn{
+border:1px solid #28334a;background:#182235;
+color:#dce3ef;border-radius:7px;padding:6px;font-size:10px
+}
+
+.smallBtn.danger{color:#ff8d8d}
+
+.addFeature{
+width:100%;border:1px dashed #394866;
+background:#111827;color:#b9c5d8;
+border-radius:10px;padding:10px;margin-top:10px
+}
+
+.emptyFeature{
+color:#7d8796;text-align:center;font-size:12px;padding:10px
+}
+
+.panelActions{
+display:flex;gap:7px;justify-content:flex-end;margin-top:10px
+}
+
+.saveBtn{
+border:0;background:linear-gradient(135deg,#4b2cff,#287cff);
+color:#fff;border-radius:9px;padding:9px 14px;font-weight:700
+}
+
+.resetBtn{
+border:1px solid #28334a;background:#182235;
+color:#dce3ef;border-radius:9px;padding:9px 14px
+}
+
 @media(max-width:700px){
 #side{display:none}
 .wrap{max-width:88%}
 .welcome{margin-top:45px}
 .welcome h1{font-size:26px}
+#controlOverlay{padding:0}
+#controlPanel{width:100%;height:100%;max-height:100dvh;border-radius:0}
+.controlHead{padding:13px}
 }
 </style>
 </head>
@@ -172,6 +331,13 @@ font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 </div>
 
 <button class="sidebtn primary" id="newChat">＋ New Chat</button>
+
+<div class="section">Assistant Mode</div>
+
+<div class="modebar">
+<button class="modebtn active" id="novaMode">NOVA</button>
+<button class="modebtn" id="jarvisMode">JARVIS</button>
+</div>
 
 <button class="sidebtn" id="searchChats">🔎 Search Chats</button>
 
@@ -190,11 +356,10 @@ font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 </button>
 
 <button class="sidebtn" id="settings">
-⚙️ Settings
+⚙️ Master Control
 </button>
 
 </aside>
-
 
 <main id="main">
 
@@ -203,7 +368,7 @@ font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 <button class="topbtn" id="mobileMenu">☰</button>
 
 <div>
-<b>Nova AI</b>
+<b id="topTitle">Nova AI</b>
 <div class="status">● <b>Online</b></div>
 </div>
 
@@ -211,16 +376,15 @@ font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 
 </header>
 
-
 <section id="chat">
 
 <div class="welcome" id="welcome">
 
-<div class="biglogo">N</div>
+<div class="biglogo" id="welcomeLogo">N</div>
 
-<h1>Nova AI</h1>
+<h1 id="welcomeTitle">Nova AI</h1>
 
-<p>
+<p id="welcomeText">
 Your AI assistant. Ask anything, use your voice,
 attach text files, or try a quick prompt.
 </p>
@@ -239,10 +403,13 @@ Motivation
 Study tips
 </button>
 
-</div>
+<button data-q="What can you help me with?">
+What can you do?
+</button>
 
 </div>
 
+</div>
 
 <div class="typing" id="typing">
 <span class="dot"></span>
@@ -251,7 +418,6 @@ Study tips
 </div>
 
 </section>
-
 
 <footer id="composer">
 
@@ -285,6 +451,217 @@ accept=".txt,.md,.json,.csv,.js,.html,.css,.py,.java,.xml,.yaml,.yml,.log"
 </div>
 
 
+<!-- =========================
+     MASTER CONTROL CENTER
+========================= -->
+
+<div id="controlOverlay">
+
+<div id="controlPanel">
+
+<div class="controlHead">
+<h2>⚙️ Nova + JARVIS Control Center</h2>
+<button class="closebtn" id="closeControl">✕</button>
+</div>
+
+<div class="controlBody">
+
+<div class="controlSection">
+
+<h3>🤖 Assistant</h3>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Default Mode</div>
+<div class="controlDesc">Choose Nova or JARVIS as the default assistant.</div>
+</div>
+
+<select id="defaultMode">
+<option value="nova">Nova</option>
+<option value="jarvis">JARVIS</option>
+</select>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Auto Speak</div>
+<div class="controlDesc">Automatically speak AI responses.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="autoSpeak">
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Voice Input</div>
+<div class="controlDesc">Allow microphone voice commands.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="voiceInputEnabled" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Response Style</div>
+<div class="controlDesc">Controls the preferred answer style.</div>
+</div>
+
+<select id="responseStyle">
+<option value="normal">Normal</option>
+<option value="short">Short</option>
+<option value="detailed">Detailed</option>
+</select>
+</div>
+
+</div>
+
+
+<div class="controlSection">
+
+<h3>🧠 Nova Control</h3>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Memory</div>
+<div class="controlDesc">Allow Nova to use saved memory.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="memoryEnabled" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Web Search</div>
+<div class="controlDesc">Enable web/search tools when available.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="webEnabled" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Language</div>
+<div class="controlDesc">Preferred assistant language.</div>
+</div>
+
+<select id="language">
+<option value="en-IN">English</option>
+<option value="hi-IN">Hindi</option>
+<option value="hinglish">Hinglish</option>
+</select>
+</div>
+
+</div>
+
+
+<div class="controlSection">
+
+<h3>🛡️ JARVIS Control</h3>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">JARVIS Commands</div>
+<div class="controlDesc">Enable command/action processing.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="commandsEnabled" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Ask Before Actions</div>
+<div class="controlDesc">Require confirmation before an action.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="confirmActions" checked>
+<span class="slider"></span>
+</label>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Automation</div>
+<div class="controlDesc">Allow future automation modules.</div>
+</div>
+
+<label class="switch">
+<input type="checkbox" id="automationEnabled">
+<span class="slider"></span>
+</label>
+</div>
+
+</div>
+
+
+<div class="controlSection">
+
+<h3>🧩 Feature & Plugin Manager</h3>
+
+<div id="featureList"></div>
+
+<button class="addFeature" id="addFeature">
+＋ Add Custom Feature
+</button>
+
+<div class="controlDesc" style="margin-top:8px">
+Custom features are stored as registered modules. Arbitrary code is
+not executed directly for security.
+</div>
+
+</div>
+
+
+<div class="controlSection">
+
+<h3>💾 Data</h3>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Export Settings</div>
+<div class="controlDesc">Copy your Nova configuration.</div>
+</div>
+
+<button class="smallBtn" id="exportSettings">Export</button>
+</div>
+
+<div class="controlRow">
+<div>
+<div class="controlLabel">Reset Settings</div>
+<div class="controlDesc">Restore default control settings.</div>
+</div>
+
+<button class="smallBtn danger" id="resetSettings">Reset</button>
+</div>
+
+</div>
+
+
+<div class="panelActions">
+<button class="resetBtn" id="cancelControl">Close</button>
+<button class="saveBtn" id="saveControl">Save Settings</button>
+</div>
+
+</div>
+</div>
+</div>
+
+
 <script>
 
 /* =========================
@@ -305,7 +682,57 @@ JSON.parse(localStorage.getItem("nova_messages") || "[]");
 let memory =
 JSON.parse(localStorage.getItem("nova_memory") || "[]");
 
+let features =
+JSON.parse(localStorage.getItem("nova_features") || "[]");
+
+let settingsData =
+JSON.parse(
+localStorage.getItem("nova_settings") ||
+"null"
+);
+
+let currentMode =
+localStorage.getItem("nova_mode") || "nova";
+
 let pendingFile = null;
+
+
+/* =========================
+   DEFAULT SETTINGS
+========================= */
+
+const defaultSettings = {
+
+mode:"nova",
+
+autospeak:false,
+
+voiceInput:true,
+
+memory:true,
+
+web:true,
+
+language:"en-IN",
+
+responseStyle:"normal",
+
+commands:true,
+
+confirmActions:true,
+
+automation:false
+
+};
+
+
+if(!settingsData){
+
+settingsData = {
+...defaultSettings
+};
+
+}
 
 
 /* =========================
@@ -332,6 +759,21 @@ localStorage.setItem(
 JSON.stringify(memory)
 );
 
+localStorage.setItem(
+"nova_features",
+JSON.stringify(features)
+);
+
+localStorage.setItem(
+"nova_settings",
+JSON.stringify(settingsData)
+);
+
+localStorage.setItem(
+"nova_mode",
+currentMode
+);
+
 }
 
 
@@ -353,6 +795,83 @@ return {
 });
 
 }
+
+
+/* =========================
+   MODE
+========================= */
+
+function setMode(mode){
+
+currentMode = mode;
+
+localStorage.setItem(
+"nova_mode",
+mode
+);
+
+$("novaMode").classList.toggle(
+"active",
+mode === "nova"
+);
+
+$("jarvisMode").classList.toggle(
+"active",
+mode === "jarvis"
+);
+
+
+if(mode === "jarvis"){
+
+$("topTitle").textContent =
+"JARVIS";
+
+$("welcomeLogo").textContent =
+"J";
+
+$("welcomeTitle").textContent =
+"JARVIS";
+
+$("welcomeText").textContent =
+"Your intelligent command assistant. Speak or type a request.";
+
+input.placeholder =
+"Command JARVIS...";
+
+}else{
+
+$("topTitle").textContent =
+"Nova AI";
+
+$("welcomeLogo").textContent =
+"N";
+
+$("welcomeTitle").textContent =
+"Nova AI";
+
+$("welcomeText").textContent =
+"Your AI assistant. Ask anything, use your voice, attach text files, or try a quick prompt.";
+
+input.placeholder =
+"Message Nova AI...";
+
+}
+
+}
+
+
+$("novaMode").onclick = () => {
+
+setMode("nova");
+
+};
+
+
+$("jarvisMode").onclick = () => {
+
+setMode("jarvis");
+
+};
 
 
 /* =========================
@@ -481,6 +1000,11 @@ speechSynthesis.cancel();
 const utterance =
 new SpeechSynthesisUtterance(text);
 
+utterance.lang =
+settingsData.language === "hi-IN"
+? "hi-IN"
+: "en-IN";
+
 speechSynthesis.speak(utterance);
 
 }
@@ -506,10 +1030,38 @@ Math.min(input.scrollHeight,120) + "px";
 
 function memoryText(){
 
-if(!memory.length) return "";
+if(
+!settingsData.memory ||
+!memory.length
+) return "";
 
 return "\n\nSaved memory:\n" +
 memory.join("\n");
+
+}
+
+
+/* =========================
+   ASSISTANT MODE CONTEXT
+========================= */
+
+function modeContext(){
+
+if(currentMode === "jarvis"){
+
+return `
+You are operating in JARVIS assistant mode.
+Be concise, helpful and action-oriented.
+Understand commands and explain when an action requires permission.
+Do not claim to have performed a device action unless the app actually performed it.
+`;
+
+}
+
+return `
+You are Nova AI, the primary AI assistant.
+Be helpful, natural and context-aware.
+`;
 
 }
 
@@ -585,7 +1137,14 @@ headers:{
 body:JSON.stringify({
 
 message:
-final + memoryText(),
+modeContext() +
+"\nPreferred response style: " +
+settingsData.responseStyle +
+"\nPreferred language: " +
+settingsData.language +
+"\n\nUser message:\n" +
+final +
+memoryText(),
 
 history:history
 
@@ -601,649 +1160,4 @@ await response.json();
 if(!response.ok || !data.ok){
 
 throw new Error(
-data.error || "Server error"
-);
-
-}
-
-
-messages.push({
-
-role:"assistant",
-
-content:
-data.reply || "No reply received."
-
-});
-
-save();
-render();
-
-
-if(
-localStorage.getItem(
-"nova_autospeak"
-) === "1"
-){
-
-speak(data.reply);
-
-}
-
-
-}catch(error){
-
-messages.push({
-
-role:"assistant",
-
-content:
-"❌ Connection error: " +
-error.message
-
-});
-
-save();
-render();
-
-}finally{
-
-typing.classList.remove("show");
-
-}
-
-}
-
-
-/* =========================
-   REGENERATE
-========================= */
-
-async function regenerate(index){
-
-const previous =
-messages[index - 1];
-
-
-if(
-!previous ||
-previous.role !== "user"
-){
-
-return;
-
-}
-
-
-messages =
-messages.slice(0,index);
-
-save();
-render();
-
-
-await sendMessage(
-previous.content
-);
-
-}
-
-
-/* =========================
-   NEW CHAT
-========================= */
-
-$("newChat").onclick = () => {
-
-messages = [];
-
-save();
-render();
-
-input.focus();
-
-};
-
-
-/* =========================
-   CLEAR CHAT
-========================= */
-
-$("clearChat").onclick = () => {
-
-if(
-confirm(
-"Current chat clear karna hai?"
-)
-){
-
-messages = [];
-
-save();
-render();
-
-}
-
-};
-
-
-/* =========================
-   SEND BUTTON
-========================= */
-
-$("send").onclick = () => {
-
-sendMessage();
-
-};
-
-
-/* =========================
-   ENTER SEND
-========================= */
-
-input.addEventListener(
-"keydown",
-function(e){
-
-if(
-e.key === "Enter" &&
-!e.shiftKey
-){
-
-e.preventDefault();
-
-sendMessage();
-
-}
-
-});
-
-
-input.addEventListener(
-"input",
-resize
-);
-
-
-/* =========================
-   FILE ATTACH
-========================= */
-
-$("attach").onclick = () => {
-
-$("fileInput").click();
-
-};
-
-
-$("fileInput").onchange =
-async function(e){
-
-const file =
-e.target.files[0];
-
-if(!file) return;
-
-
-if(file.size > 200000){
-
-alert(
-"File 200 KB se chhoti rakho."
-);
-
-return;
-
-}
-
-
-try{
-
-const text =
-await file.text();
-
-
-pendingFile = {
-
-name:file.name,
-
-text:text
-
-};
-
-
-preview.textContent =
-"📎 " +
-file.name +
-" attached";
-
-preview.style.display =
-"block";
-
-
-}catch(error){
-
-alert(
-"File read nahi ho payi."
-);
-
-}
-
-};
-
-
-/* =========================
-   GOOGLE SEARCH
-========================= */
-
-$("googleSearch").onclick = () => {
-
-const q =
-prompt(
-"Kya search karna hai?"
-);
-
-if(q){
-
-window.open(
-"https://www.google.com/search?q=" +
-encodeURIComponent(q),
-"_blank"
-);
-
-}
-
-};
-
-
-/* =========================
-   CONNECTION TEST
-========================= */
-
-$("testConnection").onclick =
-async function(){
-
-const button =
-$("testConnection");
-
-
-button.textContent =
-"⏳ Testing...";
-
-
-try{
-
-const response =
-await fetch(API,{
-
-method:"POST",
-
-headers:{
-"Content-Type":
-"application/json"
-},
-
-body:JSON.stringify({
-
-message:
-"Hello Nova, connection test",
-
-history:[]
-
-})
-
-});
-
-
-const data =
-await response.json();
-
-
-if(data.ok){
-
-alert(
-"✅ Nova Connected!\n\n" +
-data.reply
-);
-
-}else{
-
-alert(
-"❌ Nova Error\n\n" +
-JSON.stringify(data)
-);
-
-}
-
-
-}catch(error){
-
-alert(
-"❌ Connection failed\n\n" +
-error.message
-);
-
-}
-
-
-button.textContent =
-"🔌 Test Connection";
-
-};
-
-
-/* =========================
-   MEMORY
-========================= */
-
-$("showMemory").onclick = () => {
-
-const action =
-prompt(
-"Memory:\n" +
-"1 = Add\n" +
-"2 = View\n" +
-"3 = Clear"
-);
-
-
-if(action === "1"){
-
-const text =
-prompt(
-"Kya remember karna hai?"
-);
-
-if(text){
-
-memory.push(text);
-
-save();
-
-alert(
-"✅ Memory saved"
-);
-
-}
-
-}
-
-
-else if(action === "2"){
-
-alert(
-
-memory.length
-
-?
-
-memory
-.map(
-(x,i)=>
-(i+1) + ". " + x
-)
-.join("\n")
-
-:
-
-"No saved memory."
-
-);
-
-}
-
-
-else if(action === "3"){
-
-memory = [];
-
-save();
-
-alert(
-"✅ Memory cleared"
-);
-
-}
-
-};
-
-
-/* =========================
-   SETTINGS
-========================= */
-
-$("settings").onclick = () => {
-
-const auto =
-localStorage.getItem(
-"nova_autospeak"
-) === "1";
-
-
-const action =
-prompt(
-
-"Settings:\n" +
-
-"1 = Auto speak " +
-(auto ? "(ON)" : "(OFF)") +
-
-"\n2 = Reset app data"
-
-);
-
-
-if(action === "1"){
-
-localStorage.setItem(
-"nova_autospeak",
-auto ? "0" : "1"
-);
-
-alert(
-"Auto speak " +
-(!auto ? "ON" : "OFF")
-);
-
-}
-
-
-if(
-action === "2" &&
-confirm(
-"Reset all Nova data?"
-)
-){
-
-localStorage.clear();
-
-location.reload();
-
-}
-
-};
-
-
-/* =========================
-   SEARCH CHATS
-========================= */
-
-$("searchChats").onclick = () => {
-
-const q =
-prompt(
-"Chat me kya search karna hai?"
-);
-
-
-if(!q) return;
-
-
-const found =
-messages.filter(
-m =>
-m.content
-.toLowerCase()
-.includes(
-q.toLowerCase()
-)
-);
-
-
-if(found.length){
-
-alert(
-
-found
-.map(
-m =>
-m.role +
-": " +
-m.content.slice(0,120)
-)
-.join("\n\n")
-
-);
-
-}else{
-
-alert(
-"Kuch nahi mila."
-);
-
-}
-
-};
-
-
-/* =========================
-   QUICK PROMPTS
-========================= */
-
-document
-.querySelectorAll(".quick button")
-.forEach(button => {
-
-button.onclick = () => {
-
-input.value =
-button.dataset.q;
-
-resize();
-
-sendMessage();
-
-};
-
-});
-
-
-/* =========================
-   VOICE INPUT
-========================= */
-
-$("mic").onclick = () => {
-
-const SpeechRecognition =
-window.SpeechRecognition ||
-window.webkitSpeechRecognition;
-
-
-if(!SpeechRecognition){
-
-alert(
-"Is browser me voice input supported nahi hai."
-);
-
-return;
-
-}
-
-
-const recognition =
-new SpeechRecognition();
-
-
-recognition.lang =
-"en-IN";
-
-
-recognition.interimResults =
-false;
-
-
-recognition.continuous =
-false;
-
-
-recognition.onresult =
-function(event){
-
-const text =
-event
-.results[0][0]
-.transcript;
-
-
-input.value +=
-(input.value ? " " : "") +
-text;
-
-
-resize();
-
-};
-
-
-recognition.onerror =
-function(event){
-
-alert(
-"Voice error: " +
-event.error
-);
-
-};
-
-
-try{
-
-recognition.start();
-
-}catch(error){
-
-alert(
-"Microphone start nahi ho paya."
-);
-
-}
-
-};
-
-
-/* =========================
-   MOBILE MENU
-========================= */
-
-$("mobileMenu").onclick = () => {
-
-alert(
-"Nova AI\n\n" +
-"Mobile version me chat controls neeche hain."
-);
-
-};
-
-
-/* =========================
-   START
-========================= */
-
-render();
-
-resize();
-
-</script>
-
-</body>
-  </html>
+data.error || 
