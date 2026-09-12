@@ -1,16 +1,19 @@
 <!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b0d10">
+<title>Nova AI</title>
 
-<html lang="en">    
-<head>    
-<meta charset="utf-8">    
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">    
-<meta name="theme-color" content="#0b0d10">    
-<title>Nova AI</title>  <style>    
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}    
-html,body{margin:0;width:100%;height:100%;background:#070a12;color:#fff;font-family:Arial,sans-serif}    
-body{overflow:hidden}    
-button,textarea,input,select{font:inherit}    
-button{cursor:pointer}    #app{height:100dvh;display:flex;background:#070a12}
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;background:#070a12;color:#fff;font-family:Arial,sans-serif}
+body{overflow:hidden}
+button,textarea,input,select{font:inherit}
+button{cursor:pointer}
+
+#app{height:100dvh;display:flex;background:#070a12}
 
 #side{
 width:220px;min-width:220px;background:#0d1322;
@@ -154,77 +157,189 @@ font-size:11px;color:#8f9bad;padding:4px 8px;display:none
 .welcome{margin-top:45px}
 .welcome h1{font-size:26px}
 }
-</style>  </head>  <body>  <div id="app">  <aside id="side">  <div class="brand">
+</style>
+</head>
 
-<div class="logo">N</div>    
-<span>Nova AI</span>    
-</div>  <button class="sidebtn primary" id="newChat">＋ New Chat</button>  <button class="sidebtn" id="searchChats">🔎 Search Chats</button>
+<body>
 
-<div class="section">Tools</div>  <button class="sidebtn" id="testConnection">    
-🔌 Test Connection    
-</button>  <button class="sidebtn" id="googleSearch">    
-🌐 Google Search    
-</button>  <button class="sidebtn" id="showMemory">    
-🧠 Memory    
-</button>  <button class="sidebtn" id="settings">    
-⚙️ Settings    
-</button>  </aside>  <main id="main">  <header id="top">  <button class="topbtn" id="mobileMenu">☰</button>  <div>    
-<b>Nova AI</b>    
-<div class="status">● <b>Online</b></div>    
-</div>  <button class="topbtn" id="clearChat">🗑</button>  </header>  <section id="chat">  <div class="welcome" id="welcome">  <div class="biglogo">N</div>  <h1>Nova AI</h1>  <p>    
-Your AI assistant. Ask anything, use your voice,    
-attach text files, or try a quick prompt.    
-</p>  <div class="quick">  <button data-q="Explain artificial intelligence simply">    
-Explain AI    
-</button>  <button data-q="Write a short motivational message">    
-Motivation    
-</button>  <button data-q="Give me 5 useful study tips">    
-Study tips    
-</button>  </div>  </div>  <div class="typing" id="typing">    
-<span class="dot"></span>    
-<span class="dot"></span>    
-<span class="dot"></span>    
-</div>  </section>  <footer id="composer">  <div class="preview" id="preview"></div>  <div class="box">  <button class="iconbtn" id="attach">＋</button>  <textarea    
-id="input"    
-rows="1"    
-placeholder="Message Nova AI..."    
-></textarea>  <button class="iconbtn" id="mic">🎙️</button>  <button class="iconbtn" id="send">➤</button>
+<div id="app">
 
-</div>  <input  
-id="fileInput"  
-type="file"  
-accept=".txt,.md,.json,.csv,.js,.html,.css,.py,.java,.xml,.yaml,.yml,.log"  > 
+<aside id="side">
 
-</footer>  </main>    
-</div>  <script>    /* =========================
+<div class="brand">
+<div class="logo">N</div>
+<span>Nova AI</span>
+</div>
+
+<button class="sidebtn primary" id="newChat">＋ New Chat</button>
+
+<button class="sidebtn" id="searchChats">
+🔎 Search Chats
+</button>
+
+<div class="section">Tools</div>
+
+<button class="sidebtn" id="testConnection">
+🔌 Test Connection
+</button>
+
+<button class="sidebtn" id="googleSearch">
+🌐 Google Search
+</button>
+
+<button class="sidebtn" id="showMemory">
+🧠 Memory
+</button>
+
+<button class="sidebtn" id="settings">
+⚙️ Settings
+</button>
+
+</aside>
+
+<main id="main">
+
+<header id="top">
+
+<button class="topbtn" id="mobileMenu">
+☰
+</button>
+
+<div>
+<b>Nova AI</b>
+
+<div class="status">
+● <b>Online</b>
+</div>
+
+</div>
+
+<button class="topbtn" id="clearChat">
+🗑
+</button>
+
+</header>
+
+<section id="chat">
+
+<div class="welcome" id="welcome">
+
+<div class="biglogo">
+N
+</div>
+
+<h1>Nova AI</h1>
+
+<p>
+Your AI assistant. Ask anything, use your voice,
+attach text files, or try a quick prompt.
+</p>
+
+<div class="quick">
+
+<button data-q="Explain artificial intelligence simply">
+Explain AI
+</button>
+
+<button data-q="Write a short motivational message">
+Motivation
+</button>
+
+<button data-q="Give me 5 useful study tips">
+Study tips
+</button>
+
+</div>
+
+</div>
+
+<div class="typing" id="typing">
+
+<span class="dot"></span>
+<span class="dot"></span>
+<span class="dot"></span>
+
+</div>
+
+</section>
+
+<footer id="composer">
+
+<div class="preview" id="preview"></div>
+
+<div class="box">
+
+<button class="iconbtn" id="attach">
+＋
+</button>
+
+<textarea
+id="input"
+rows="1"
+placeholder="Message Nova AI..."
+></textarea>
+
+<button class="iconbtn" id="mic">
+🎙️
+</button>
+
+<button class="iconbtn" id="send">
+➤
+</button>
+
+</div>
+
+<input
+id="fileInput"
+type="file"
+accept=".txt,.md,.json,.csv,.js,.html,.css,.py,.java,.xml,.yaml,.yml,.log"
+>
+
+</footer>
+
+</main>
+
+</div>
+
+<script>
+
+/* =========================
 NOVA AI BACKEND
 ========================= */
 
 const API =
 "https://red-mountain-f307.motiharijan123456.workers.dev/chat";
 
+
 /* =========================
 LOCAL DATA
 ========================= */
 
 let messages =
-JSON.parse(localStorage.getItem("nova_messages") || "[]");
+JSON.parse(
+localStorage.getItem("nova_messages") || "[]"
+);
 
 let memory =
-JSON.parse(localStorage.getItem("nova_memory") || "[]");
+JSON.parse(
+localStorage.getItem("nova_memory") || "[]"
+);
 
 let pendingFile = null;
+
 
 /* =========================
 HELPERS
 ========================= */
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+document.getElementById(id);
 
 const chat = $("chat");
 const input = $("input");
 const typing = $("typing");
 const preview = $("preview");
+
 
 function save(){
 
@@ -240,6 +355,9 @@ JSON.stringify(memory)
 
 }
 
+
+/* FIXED ESCAPE FUNCTION */
+
 function escapeHTML(text){
 
 return String(text).replace(
@@ -248,16 +366,19 @@ return String(text).replace(
 function(c){
 
 return {
-"&":"&",
-"<":"<",
-">":">",
-'"':""",
-"'":"'"
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
 }[c];
 
 });
 
 }
+
 
 /* =========================
 RENDER CHAT
@@ -265,52 +386,92 @@ RENDER CHAT
 
 function render(){
 
-chat.querySelectorAll(".row").forEach(
-x => x.remove()
-);
+chat
+.querySelectorAll(".row")
+.forEach(x => x.remove());
+
 
 if(messages.length === 0){
 
-$("welcome").style.display = "block";
+$("welcome").style.display =
+"block";
 
 return;
 
 }
 
-$("welcome").style.display = "none";
+
+$("welcome").style.display =
+"none";
+
 
 messages.forEach((m,index)=>{
 
-const row = document.createElement("div");
+const row =
+document.createElement("div");
 
 row.className =
 "row " +
-(m.role === "user" ? "user" : "ai");
+(
+m.role === "user"
+? "user"
+: "ai"
+);
 
-const wrap = document.createElement("div");
 
-wrap.className = "wrap";
+const wrap =
+document.createElement("div");
+
+wrap.className =
+"wrap";
+
 
 const bubble =
 document.createElement("div");
 
-bubble.className = "bubble";
+bubble.className =
+"bubble";
+
 
 bubble.innerHTML =
 escapeHTML(m.content);
 
+
 wrap.appendChild(bubble);
+
+
+/* =========================
+ASSISTANT BUTTONS
+FIXED
+========================= */
 
 if(m.role === "assistant"){
 
 const tools =
 document.createElement("div");
 
-tools.className = "tools";
+tools.className =
+"tools";
 
-tools.innerHTML =     <button class="tool copy">📋 Copy</button>     <button class="tool speak">🔊 Speak</button>     <button class="tool regen">↻ Regenerate</button>    ;
 
-tools.querySelector(".copy").onclick =
+tools.innerHTML = `
+<button class="tool copy">
+📋 Copy
+</button>
+
+<button class="tool speak">
+🔊 Speak
+</button>
+
+<button class="tool regen">
+↻ Regenerate
+</button>
+`;
+
+
+tools
+.querySelector(".copy")
+.onclick =
 async () => {
 
 try{
@@ -329,25 +490,47 @@ alert("Copy failed.");
 
 };
 
-tools.querySelector(".speak").onclick =
-() => speak(m.content);
 
-tools.querySelector(".regen").onclick =
-() => regenerate(index);
+tools
+.querySelector(".speak")
+.onclick =
+() => {
+
+speak(m.content);
+
+};
+
+
+tools
+.querySelector(".regen")
+.onclick =
+() => {
+
+regenerate(index);
+
+};
+
 
 wrap.appendChild(tools);
 
 }
 
+
 row.appendChild(wrap);
 
-chat.insertBefore(row,typing);
+chat.insertBefore(
+row,
+typing
+);
 
 });
 
-chat.scrollTop = chat.scrollHeight;
+
+chat.scrollTop =
+chat.scrollHeight;
 
 }
+
 
 /* =========================
 VOICE OUTPUT
@@ -355,9 +538,13 @@ VOICE OUTPUT
 
 function speak(text){
 
-if(!("speechSynthesis" in window)){
+if(
+!("speechSynthesis" in window)
+){
 
-alert("Voice output supported nahi hai.");
+alert(
+"Voice output supported nahi hai."
+);
 
 return;
 
@@ -368,9 +555,12 @@ speechSynthesis.cancel();
 const utterance =
 new SpeechSynthesisUtterance(text);
 
-speechSynthesis.speak(utterance);
+speechSynthesis.speak(
+utterance
+);
 
 }
+
 
 /* =========================
 TEXTAREA SIZE
@@ -378,12 +568,17 @@ TEXTAREA SIZE
 
 function resize(){
 
-input.style.height = "auto";
+input.style.height =
+"auto";
 
 input.style.height =
-Math.min(input.scrollHeight,120) + "px";
+Math.min(
+input.scrollHeight,
+120
+) + "px";
 
 }
+
 
 /* =========================
 MEMORY
@@ -391,12 +586,14 @@ MEMORY
 
 function memoryText(){
 
-if(!memory.length) return "";
+if(!memory.length)
+return "";
 
 return "\n\nSaved memory:\n" +
 memory.join("\n");
 
 }
+
 
 /* =========================
 SEND MESSAGE
@@ -406,9 +603,18 @@ async function sendMessage(
 text = input.value.trim()
 ){
 
-if(!text && !pendingFile) return;
+if(
+!text &&
+!pendingFile
+){
+
+return;
+
+}
+
 
 let final = text;
+
 
 if(pendingFile){
 
@@ -419,26 +625,40 @@ pendingFile.text;
 
 }
 
+
 messages.push({
+
 role:"user",
 content:final
+
 });
+
 
 save();
 render();
 
+
 input.value = "";
+
 resize();
+
 
 pendingFile = null;
 
-preview.style.display = "none";
-preview.textContent = "";
+preview.style.display =
+"none";
 
-typing.classList.add("show");
+preview.textContent =
+"";
+
+
+typing.classList.add(
+"show"
+);
 
 chat.scrollTop =
 chat.scrollHeight;
+
 
 try{
 
@@ -446,17 +666,23 @@ const history =
 messages
 .slice(-20)
 .map(m => ({
+
 role:m.role,
 content:m.content
+
 }));
 
+
 const response =
-await fetch(API,{
+await fetch(
+API,
+{
 
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":
+"application/json"
 },
 
 body:JSON.stringify({
@@ -470,28 +696,38 @@ history:history
 
 });
 
+
 const data =
 await response.json();
 
-if(!response.ok || !data.ok){
+
+if(
+!response.ok ||
+!data.ok
+){
 
 throw new Error(
-data.error || "Server error"
+data.error ||
+"Server error"
 );
 
 }
+
 
 messages.push({
 
 role:"assistant",
 
 content:
-data.reply || "No reply received."
+data.reply ||
+"No reply received."
 
 });
 
+
 save();
 render();
+
 
 if(
 localStorage.getItem(
@@ -502,6 +738,7 @@ localStorage.getItem(
 speak(data.reply);
 
 }
+
 
 }catch(error){
 
@@ -515,16 +752,21 @@ error.message
 
 });
 
+
 save();
 render();
 
+
 }finally{
 
-typing.classList.remove("show");
+typing.classList.remove(
+"show"
+);
 
 }
 
 }
+
 
 /* =========================
 REGENERATE
@@ -535,6 +777,7 @@ async function regenerate(index){
 const previous =
 messages[index - 1];
 
+
 if(
 !previous ||
 previous.role !== "user"
@@ -544,11 +787,17 @@ return;
 
 }
 
+
 messages =
-messages.slice(0,index);
+messages.slice(
+0,
+index
+);
+
 
 save();
 render();
+
 
 await sendMessage(
 previous.content
@@ -556,11 +805,13 @@ previous.content
 
 }
 
+
 /* =========================
 NEW CHAT
 ========================= */
 
-$("newChat").onclick = () => {
+$("newChat").onclick =
+() => {
 
 messages = [];
 
@@ -571,11 +822,13 @@ input.focus();
 
 };
 
+
 /* =========================
 CLEAR CHAT
 ========================= */
 
-$("clearChat").onclick = () => {
+$("clearChat").onclick =
+() => {
 
 if(
 confirm(
@@ -592,15 +845,18 @@ render();
 
 };
 
+
 /* =========================
 SEND BUTTON
 ========================= */
 
-$("send").onclick = () => {
+$("send").onclick =
+() => {
 
 sendMessage();
 
 };
+
 
 /* =========================
 ENTER SEND
@@ -623,20 +879,24 @@ sendMessage();
 
 });
 
+
 input.addEventListener(
 "input",
 resize
 );
 
+
 /* =========================
 FILE ATTACH
 ========================= */
 
-$("attach").onclick = () => {
+$("attach").onclick =
+() => {
 
 $("fileInput").click();
 
 };
+
 
 $("fileInput").onchange =
 async function(e){
@@ -644,7 +904,10 @@ async function(e){
 const file =
 e.target.files[0];
 
-if(!file) return;
+
+if(!file)
+return;
+
 
 if(file.size > 200000){
 
@@ -656,26 +919,30 @@ return;
 
 }
 
+
 try{
 
 const text =
 await file.text();
 
+
 pendingFile = {
 
 name:file.name,
-
 text:text
 
 };
+
 
 preview.textContent =
 "📎 " +
 file.name +
 " attached";
 
+
 preview.style.display =
 "block";
+
 
 }catch(error){
 
@@ -687,16 +954,19 @@ alert(
 
 };
 
+
 /* =========================
 GOOGLE SEARCH
 ========================= */
 
-$("googleSearch").onclick = () => {
+$("googleSearch").onclick =
+() => {
 
 const q =
 prompt(
 "Kya search karna hai?"
 );
+
 
 if(q){
 
@@ -710,6 +980,7 @@ encodeURIComponent(q),
 
 };
 
+
 /* =========================
 CONNECTION TEST
 ========================= */
@@ -720,13 +991,17 @@ async function(){
 const button =
 $("testConnection");
 
+
 button.textContent =
 "⏳ Testing...";
+
 
 try{
 
 const response =
-await fetch(API,{
+await fetch(
+API,
+{
 
 method:"POST",
 
@@ -746,8 +1021,10 @@ history:[]
 
 });
 
+
 const data =
 await response.json();
+
 
 if(data.ok){
 
@@ -765,6 +1042,7 @@ JSON.stringify(data)
 
 }
 
+
 }catch(error){
 
 alert(
@@ -774,16 +1052,19 @@ error.message
 
 }
 
+
 button.textContent =
 "🔌 Test Connection";
 
 };
 
+
 /* =========================
 MEMORY
 ========================= */
 
-$("showMemory").onclick = () => {
+$("showMemory").onclick =
+() => {
 
 const action =
 prompt(
@@ -793,12 +1074,14 @@ prompt(
 "3 = Clear"
 );
 
+
 if(action === "1"){
 
 const text =
 prompt(
 "Kya remember karna hai?"
 );
+
 
 if(text){
 
@@ -814,6 +1097,7 @@ alert(
 
 }
 
+
 else if(action === "2"){
 
 alert(
@@ -824,8 +1108,10 @@ memory.length
 
 memory
 .map(
-(x,i)=>
-(i+1) + ". " + x
+(x,i) =>
+(i+1) +
+". " +
+x
 )
 .join("\n")
 
@@ -836,6 +1122,7 @@ memory
 );
 
 }
+
 
 else if(action === "3"){
 
@@ -851,16 +1138,19 @@ alert(
 
 };
 
+
 /* =========================
 SETTINGS
 ========================= */
 
-$("settings").onclick = () => {
+$("settings").onclick =
+() => {
 
 const auto =
 localStorage.getItem(
 "nova_autospeak"
 ) === "1";
+
 
 const action =
 prompt(
@@ -874,6 +1164,7 @@ prompt(
 
 );
 
+
 if(action === "1"){
 
 localStorage.setItem(
@@ -881,12 +1172,14 @@ localStorage.setItem(
 auto ? "0" : "1"
 );
 
+
 alert(
 "Auto speak " +
 (!auto ? "ON" : "OFF")
 );
 
 }
+
 
 if(
 action === "2" &&
@@ -903,18 +1196,23 @@ location.reload();
 
 };
 
+
 /* =========================
 SEARCH CHATS
 ========================= */
 
-$("searchChats").onclick = () => {
+$("searchChats").onclick =
+() => {
 
 const q =
 prompt(
 "Chat me kya search karna hai?"
 );
 
-if(!q) return;
+
+if(!q)
+return;
+
 
 const found =
 messages.filter(
@@ -926,6 +1224,7 @@ q.toLowerCase()
 )
 );
 
+
 if(found.length){
 
 alert(
@@ -935,7 +1234,10 @@ found
 m =>
 m.role +
 ": " +
-m.content.slice(0,120)
+m.content.slice(
+0,
+120
+)
 )
 .join("\n\n")
 
@@ -951,6 +1253,7 @@ alert(
 
 };
 
+
 /* =========================
 QUICK PROMPTS
 ========================= */
@@ -959,7 +1262,8 @@ document
 .querySelectorAll(".quick button")
 .forEach(button => {
 
-button.onclick = () => {
+button.onclick =
+() => {
 
 input.value =
 button.dataset.q;
@@ -972,15 +1276,18 @@ sendMessage();
 
 });
 
+
 /* =========================
 VOICE INPUT
 ========================= */
 
-$("mic").onclick = () => {
+$("mic").onclick =
+() => {
 
 const SpeechRecognition =
 window.SpeechRecognition ||
 window.webkitSpeechRecognition;
+
 
 if(!SpeechRecognition){
 
@@ -992,8 +1299,10 @@ return;
 
 }
 
+
 const recognition =
 new SpeechRecognition();
+
 
 recognition.lang =
 "en-IN";
@@ -1004,6 +1313,7 @@ false;
 recognition.continuous =
 false;
 
+
 recognition.onresult =
 function(event){
 
@@ -1012,13 +1322,16 @@ event
 .results[0][0]
 .transcript;
 
+
 input.value +=
 (input.value ? " " : "") +
 text;
 
+
 resize();
 
 };
+
 
 recognition.onerror =
 function(event){
@@ -1029,6 +1342,7 @@ event.error
 );
 
 };
+
 
 try{
 
@@ -1044,11 +1358,13 @@ alert(
 
 };
 
+
 /* =========================
 MOBILE MENU
 ========================= */
 
-$("mobileMenu").onclick = () => {
+$("mobileMenu").onclick =
+() => {
 
 alert(
 "Nova AI\n\n" +
@@ -1057,14 +1373,15 @@ alert(
 
 };
 
+
 /* =========================
 START
 ========================= */
 
 render();
-
 resize();
 
-</script>  </body>
+</script>
 
+</body>
    </html>
